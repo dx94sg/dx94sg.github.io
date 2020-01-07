@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>如何简单的干掉if else | Hexo</title>
-  <meta name="keywords" content=" 设计模式 ">
-  <meta name="description" content="如何简单的干掉if else | Hexo">
+  <title>quertz工具类 | Hexo</title>
+  <meta name="keywords" content=" 工具 ">
+  <meta name="description" content="quertz工具类 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="&#x2F;&#x2F; 对象转json    private ObjectMapper mapper &#x3D; new ObjectMapper();    @Test    public void testJson() throws JsonProcessingException {        User user &#x3D; new User();        user.setId(8L);        user.se">
 <meta property="og:type" content="article">
@@ -268,9 +268,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-如何简单的干掉if-else" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-quertz工具类" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">如何简单的干掉if else</h1>
+        <h1 class="article-title">quertz工具类</h1>
     
     <div class="article-meta">
         
@@ -278,21 +278,21 @@
         
         <span class="book">
             
-                <a  data-rel="设计模式">设计模式</a>
+                <a  data-rel="工具">工具</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a class="color5">设计模式</a>
+            <a class="color3">工具</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-01-07 18:31:54'>2019-09-22 11:47</time>
+        创建时间:<time class="date" title='更新时间: 2020-01-07 18:44:22'>2020-01-07 18:41</time>
         
     </div>
     <div class="article-meta">
@@ -341,37 +341,211 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>直接上代码，熟以致用：</p>
-<p>//原始代码很多if else<br>public int selectByPrimaryKey(int i)<br>{<br>       if(i==1){<br>            return 1;<br>        }else if(i==3){<br>            return 3;<br>        }else if(i==4){<br>            return 4;<br>        }<br>}<br>首先定义接口：</p>
-<p>public interface GetKey<br>{<br>    int getKey();<br>}<br>然后是接口的实现：</p>
-<p>Spring种提供的InitializingBean接口，这个接口为Bean提供了属性初始化后的处理方法，它只包括afterPropertiesSet方法，凡是继承该接口的类，在bean的属性初始化后都会执行该方法。</p>
-<p>public class Less implements GetKey,InitializingBean<br>{<br>    @Override<br>    public int getKey() {<br>        return 1;<br>    }</p>
-<pre><code>@Override
-public void afterPropertiesSet() throws Exception {
-    GetKeyFactory.register(1,this);
-}</code></pre><p>}<br>public class Middle implements GetKey,InitializingBean<br>{<br>    @Override<br>    public int getKey() {<br>        return 3;<br>    }</p>
-<pre><code>@Override
-public void afterPropertiesSet() throws Exception {
-    GetKeyFactory.register(3,this);
-}</code></pre><p>}<br>public class Big implements GetKey,InitializingBean<br>{<br>    @Override<br>    public int getKey() {<br>        return 4;<br>    }</p>
-<pre><code>@Override
-public void afterPropertiesSet() throws Exception {
-    GetKeyFactory.register(4,this);
-}</code></pre><p>}<br>然后是工厂类：</p>
-<p>这个UserPayServiceStrategyFactory中定义了一个Map，用来保存所有的策略类的实例，并提供一个getByUserType方法，可以根据类型直接获取对应的类的实例。只需要每一个策略服务的实现类都实现InitializingBean接口，并实现其afterPropertiesSet方法，在这个方法中调用UserPayServiceStrategyFactory.register即可。</p>
-<p>public class GetKeyFactory<br>{<br>    private static Map&lt;Integer,GetKey&gt; map = new ConcurrentHashMap&lt;Integer,GetKey&gt;();</p>
-<pre><code>public static GetKey get(Integer type){
-    return map.get(type);
+        <p>mport static org.quartz.JobBuilder.newJob;<br>import static org.quartz.JobKey.jobKey;<br>import static org.quartz.TriggerBuilder.newTrigger;<br>import static org.quartz.CronScheduleBuilder.cronSchedule;<br>import static org.quartz.TriggerKey.triggerKey;</p>
+<p>import java.util.Date;</p>
+<p>import org.quartz.CronTrigger;<br>import org.quartz.JobDetail;<br>import org.quartz.Scheduler;<br>import org.quartz.SchedulerException;<br>import org.quartz.Trigger;</p>
+<p>public class QuartzUtils {<br>    private static String JOB_NAME = “EXTJWEB_NAME”;<br>    private static String JOB_GROUP_NAME = “EXTJWEB_JOBGROUP_NAME”;<br>    private static String TRIGGER_NAME = “EXTJWEB_NAME”;<br>    private static String TRIGGER_GROUP_NAME = “EXTJWEB_TRIGGERGROUP_NAME”;</p>
+<pre><code>/**
+ * @Description: 添加一个定时任务，使用默认的任务组名，触发器名，触发器组名
+ * @param sched:调度器
+ * @param jobClass:任务
+ * @param time:时间设置，CronExpression表达式
+ */
+public static void addJob(Scheduler sched, @SuppressWarnings(&quot;rawtypes&quot;) Class jobClass, String time) {
+    addJob(sched, jobClass,time,JOB_NAME,JOB_GROUP_NAME,TRIGGER_NAME,TRIGGER_GROUP_NAME);
 }
 
-public static void register(Integer type,GetKey getKey){
-    map.put(type,getKey);
-}</code></pre><p>}<br>最后修改过后的版本：</p>
-<p>public int selectByPrimaryKey(int i)<br>{<br>     /*   if(i==1){<br>            return 1;<br>        }else if(i==3){<br>            return 3;<br>        }else if(i==){<br>            return 4;<br>        }<br>        */<br>        GetKey key =  GetKeyFactory.get(i);<br>        return key.getKey();<br>}<br>至此:我们通过策略模式、工厂模式以及Spring的InitializingBean，提升了代码的可读性以及可维护性，彻底消灭了一坨if-else。</p>
-<p>文中的这种做法，使用的并不是严格意义上面的策略模式和工厂模式。</p>
-<p>首先，策略模式中重要的Context角色在这里面是没有的，没有Context，也就没有用到组合的方式，而是使用工厂代替了。</p>
-<p>另外，这里面的UserPayServiceStrategyFactory其实只是维护了一个Map，并提供了register和get方法而已，而工厂模式其实是帮忙创建对象的，这里并没有用到。</p>
-<p>对于设计模式的学习，重要的是学习其思想，而不是代码实现！</p>
+/**
+ * @Description: 添加一个定时任务
+ * @param sched:调度器
+ * @param jobClass:任务
+ * @param time:时间设置，CronExpression表达式
+ * @param jobName:任务名
+ * @param jobGroupName:任务组名
+ * @param triggerName:触发器名
+ * @param triggerGroupName:触发器组名
+ */
+public static void addJob(Scheduler sched, @SuppressWarnings(&quot;rawtypes&quot;) Class jobClass, String time,
+        String jobName, String jobGroupName, String triggerName, String triggerGroupName) {
+
+    JobDetail job = newJob(jobClass).withIdentity(jobName, jobGroupName).build();
+    CronTrigger trigger = newTrigger().withIdentity(triggerName, triggerGroupName)
+            .withSchedule(cronSchedule(time)).build();
+    try {
+        // 返回为 null 添加失败
+        Date ft = sched.scheduleJob(job, trigger);
+    } catch (SchedulerException e) {
+        e.printStackTrace();
+    }
+}
+
+/**
+ * @Description: 定义一个任务之后进行触发设定(使用默认的任务组名，触发器名，触发器组名)
+ * @param sched:调度器
+ * @param time
+ */
+@SuppressWarnings(&quot;rawtypes&quot;)
+public static void addJObLaterUse(Scheduler sched, @SuppressWarnings(&quot;rawtypes&quot;) Class jobClass, String time) {
+
+    addJObLaterUse(sched,jobClass,time,JOB_NAME,JOB_GROUP_NAME);
+}
+
+/**
+ * @Description: 定义一个任务之后进行触发设定
+ * @param sched:调度器
+ * @param time
+ * @param jobName:任务名
+ * @param jobGroupName:任务组名
+ */
+@SuppressWarnings(&quot;rawtypes&quot;)
+public static void addJObLaterUse(Scheduler sched, @SuppressWarnings(&quot;rawtypes&quot;) Class jobClass, String time,
+        String jobName,String jobGroupName) {
+
+    JobDetail job = newJob(jobClass).withIdentity(jobName, jobGroupName).storeDurably().build();
+
+    try {
+        sched.addJob(job, false);
+    } catch (SchedulerException e) {
+        e.printStackTrace();
+    }
+}
+
+/**
+ * @Description: 对已存储的任务进行scheduling(使用默认的任务组名，触发器名，触发器组名)
+ * @param sched:调度器
+ * @param time
+ * @param jobName:任务名
+ * @param jobGroupName:任务组名
+ */
+@SuppressWarnings(&quot;rawtypes&quot;)
+public static void schedulingStoredJOb(Scheduler sched, @SuppressWarnings(&quot;rawtypes&quot;) Class jobClass, String time) {
+    schedulingStoredJOb(sched,jobClass,time,JOB_NAME,JOB_GROUP_NAME,TRIGGER_NAME,TRIGGER_GROUP_NAME);
+}
+
+/**
+ * @Description: 对已存储的任务进行scheduling
+ * @param sched:调度器
+ * @param time
+ * @param jobName:任务名
+ * @param jobGroupName:任务组名
+ */
+@SuppressWarnings(&quot;rawtypes&quot;)
+public static void schedulingStoredJOb(Scheduler sched, @SuppressWarnings(&quot;rawtypes&quot;) Class jobClass, String time,
+        String jobName,String jobGroupName,String triggerName, String triggerGroupName) {
+    Trigger trigger = newTrigger().withIdentity(triggerName, triggerGroupName).startNow()
+            .forJob(jobKey(jobName,jobGroupName))
+            .build();
+    try {
+        sched.scheduleJob(trigger);
+    } catch (SchedulerException e) {
+        e.printStackTrace();
+    }
+}
+
+/**
+ * @Description: 修改一个任务的触发时间(使用默认的任务组名，触发器名，触发器组名)
+ * @param sched:调度器
+ * @param time
+ */
+@SuppressWarnings(&quot;rawtypes&quot;)
+public static void modifyJobTime(Scheduler sched, String time) {
+    modifyJobTime(sched, TRIGGER_NAME, TRIGGER_GROUP_NAME, time);
+}
+
+/**
+ * @Description: 修改一个任务的触发时间
+ * @param sched:调度器
+ * @param triggerName
+ * @param triggerGroupName
+ * @param time
+ */
+public static void modifyJobTime(Scheduler sched, String triggerName, String triggerGroupName, String time) {
+    Trigger trigger = newTrigger().withIdentity(triggerName, triggerGroupName).withSchedule(cronSchedule(time)).startNow().build();
+
+    try {
+        sched.rescheduleJob(triggerKey(triggerName, triggerGroupName), trigger);
+    } catch (SchedulerException e) {
+        e.printStackTrace();
+    }
+}
+
+/**
+ * @Description: 修改一个任务(使用默认的任务组名，任务名)
+ * @param sched:调度器
+ */
+@SuppressWarnings(&quot;rawtypes&quot;)
+public static void modifyJob(Scheduler sched, @SuppressWarnings(&quot;rawtypes&quot;) Class jobClass) {
+    modifyJob(sched,jobClass,JOB_NAME,JOB_GROUP_NAME);
+}
+
+/**
+ * @Description: 修改一个任务
+ * @param sched:调度器
+ * @param jobName:任务名
+ * @param jobGroupName:任务组名
+ */
+public static void modifyJob(Scheduler sched, @SuppressWarnings(&quot;rawtypes&quot;) Class jobClass, String jobName,String jobGroupName) {
+    JobDetail job1 = newJob(jobClass).withIdentity(jobName,jobGroupName).build();
+    try {
+        sched.addJob(job1, true);
+    } catch (SchedulerException e) {
+        e.printStackTrace();
+    }
+}
+
+/**
+ * @Description: 删除一个任务的的trigger
+ * @param sched:调度器
+ * @param triggerName
+ * @param triggerGroupName
+ */
+public static void unschedulingJob(Scheduler sched,String triggerName, String triggerGroupName) {
+    try {
+        sched.unscheduleJob(triggerKey(triggerName,triggerGroupName));
+    } catch (SchedulerException e) {
+        e.printStackTrace();
+    }
+}
+
+/**
+ * @Description: 移除一个任务，以及任务的所有trigger
+ * @param sched:调度器
+ * @param jobName
+ */
+public static void removeJob(Scheduler sched, String jobName,String jobGroupName) {
+    try {
+        sched.deleteJob(jobKey(jobName,jobGroupName));
+    } catch (SchedulerException e) {
+        e.printStackTrace();
+    }
+}
+
+/**
+ * @Description:启动所有定时任务
+ * @param sched:调度器
+ */
+public static void startJobs(Scheduler sched) {
+    try {
+        sched.start();
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    }
+}
+
+/**
+ * @Description:关闭所有定时任务
+ * @param sched:调度器
+ */
+public static void shutdownJobs(Scheduler sched) {
+    try {
+        if (!sched.isShutdown()) {
+            //未传参或false：不等待执行完成便结束；true：等待任务执行完才结束
+            sched.shutdown();
+        }
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    }
+}</code></pre><p>}</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 591235401@qq.com </span>
@@ -381,12 +555,12 @@ public static void register(Integer type,GetKey getKey){
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>如何简单的干掉if else</p>
+    <p><span class="copy-title">文章标题:</span>quertz工具类</p>
     
     <p><span class="copy-title">本文作者:</span><a  title="阿杜同学">阿杜同学</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-09-22, 11:47:21</p>
-    <p><span class="copy-title">最后更新:</span>2019-09-22, 11:47:21</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/09/22/%E5%A6%82%E4%BD%95%E7%AE%80%E5%8D%95%E7%9A%84%E5%B9%B2%E6%8E%89if-else/" title="如何简单的干掉if else">http://yoursite.com/2019/09/22/%E5%A6%82%E4%BD%95%E7%AE%80%E5%8D%95%E7%9A%84%E5%B9%B2%E6%8E%89if-else/</a>
+    <p><span class="copy-title">发布时间:</span>2020-01-07, 18:41:55</p>
+    <p><span class="copy-title">最后更新:</span>2020-01-07, 18:41:55</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/01/07/quertz%E5%B7%A5%E5%85%B7%E7%B1%BB/" title="quertz工具类">http://yoursite.com/2020/01/07/quertz%E5%B7%A5%E5%85%B7%E7%B1%BB/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>如何简单的干掉if else | Hexo</title>
-  <meta name="keywords" content=" 设计模式 ">
-  <meta name="description" content="如何简单的干掉if else | Hexo">
+  <title>json与对象，集合之间的相互转换 | Hexo</title>
+  <meta name="keywords" content=" 工具 ">
+  <meta name="description" content="json与对象，集合之间的相互转换 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="&#x2F;&#x2F; 对象转json    private ObjectMapper mapper &#x3D; new ObjectMapper();    @Test    public void testJson() throws JsonProcessingException {        User user &#x3D; new User();        user.setId(8L);        user.se">
 <meta property="og:type" content="article">
@@ -268,9 +268,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-如何简单的干掉if-else" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-json与对象，集合之间的相互转换" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">如何简单的干掉if else</h1>
+        <h1 class="article-title">json与对象，集合之间的相互转换</h1>
     
     <div class="article-meta">
         
@@ -278,21 +278,21 @@
         
         <span class="book">
             
-                <a  data-rel="设计模式">设计模式</a>
+                <a  data-rel="工具">工具</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a class="color5">设计模式</a>
+            <a class="color3">工具</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-01-07 18:31:54'>2019-09-22 11:47</time>
+        创建时间:<time class="date" title='更新时间: 2020-01-07 18:44:16'>2020-01-07 18:42</time>
         
     </div>
     <div class="article-meta">
@@ -341,37 +341,30 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>直接上代码，熟以致用：</p>
-<p>//原始代码很多if else<br>public int selectByPrimaryKey(int i)<br>{<br>       if(i==1){<br>            return 1;<br>        }else if(i==3){<br>            return 3;<br>        }else if(i==4){<br>            return 4;<br>        }<br>}<br>首先定义接口：</p>
-<p>public interface GetKey<br>{<br>    int getKey();<br>}<br>然后是接口的实现：</p>
-<p>Spring种提供的InitializingBean接口，这个接口为Bean提供了属性初始化后的处理方法，它只包括afterPropertiesSet方法，凡是继承该接口的类，在bean的属性初始化后都会执行该方法。</p>
-<p>public class Less implements GetKey,InitializingBean<br>{<br>    @Override<br>    public int getKey() {<br>        return 1;<br>    }</p>
-<pre><code>@Override
-public void afterPropertiesSet() throws Exception {
-    GetKeyFactory.register(1,this);
-}</code></pre><p>}<br>public class Middle implements GetKey,InitializingBean<br>{<br>    @Override<br>    public int getKey() {<br>        return 3;<br>    }</p>
-<pre><code>@Override
-public void afterPropertiesSet() throws Exception {
-    GetKeyFactory.register(3,this);
-}</code></pre><p>}<br>public class Big implements GetKey,InitializingBean<br>{<br>    @Override<br>    public int getKey() {<br>        return 4;<br>    }</p>
-<pre><code>@Override
-public void afterPropertiesSet() throws Exception {
-    GetKeyFactory.register(4,this);
-}</code></pre><p>}<br>然后是工厂类：</p>
-<p>这个UserPayServiceStrategyFactory中定义了一个Map，用来保存所有的策略类的实例，并提供一个getByUserType方法，可以根据类型直接获取对应的类的实例。只需要每一个策略服务的实现类都实现InitializingBean接口，并实现其afterPropertiesSet方法，在这个方法中调用UserPayServiceStrategyFactory.register即可。</p>
-<p>public class GetKeyFactory<br>{<br>    private static Map&lt;Integer,GetKey&gt; map = new ConcurrentHashMap&lt;Integer,GetKey&gt;();</p>
-<pre><code>public static GetKey get(Integer type){
-    return map.get(type);
-}
+        <p>// 对象转json<br>    private ObjectMapper mapper = new ObjectMapper();<br>    @Test<br>    public void testJson() throws JsonProcessingException {<br>        User user = new User();<br>        user.setId(8L);<br>        user.setAge(21);<br>        user.setName(“柳岩”);<br>        user.setUserName(“liuyan”);<br>        // 序列化<br>        String json = mapper.writeValueAsString(user);<br>        System.out.println(“json = “ + json);<br>    }</p>
+<p>// json转对象<br>private ObjectMapper mapper = new ObjectMapper();<br>@Test<br>public void testJson() throws IOException {<br>    User user = new User();<br>    user.setId(8L);<br>    user.setAge(21);<br>    user.setName(“柳岩”);<br>    user.setUserName(“liuyan”);<br>    // 序列化<br>    String json = mapper.writeValueAsString(user);</p>
+<pre><code>// 反序列化，接收两个参数：json数据，反序列化的目标类字节码
+User result = mapper.readValue(json, User.class);
+System.out.println(&quot;result = &quot; + result);</code></pre><p>}</p>
+<p>// json转集合<br>private ObjectMapper mapper = new ObjectMapper();<br>@Test<br>public void testJson() throws IOException {<br>    User user = new User();<br>    user.setId(8L);<br>    user.setAge(21);<br>    user.setName(“柳岩”);<br>    user.setUserName(“liuyan”);</p>
+<pre><code>// 序列化,得到对象集合的json字符串
+String json = mapper.writeValueAsString(Arrays.asList(user, user));
 
-public static void register(Integer type,GetKey getKey){
-    map.put(type,getKey);
-}</code></pre><p>}<br>最后修改过后的版本：</p>
-<p>public int selectByPrimaryKey(int i)<br>{<br>     /*   if(i==1){<br>            return 1;<br>        }else if(i==3){<br>            return 3;<br>        }else if(i==){<br>            return 4;<br>        }<br>        */<br>        GetKey key =  GetKeyFactory.get(i);<br>        return key.getKey();<br>}<br>至此:我们通过策略模式、工厂模式以及Spring的InitializingBean，提升了代码的可读性以及可维护性，彻底消灭了一坨if-else。</p>
-<p>文中的这种做法，使用的并不是严格意义上面的策略模式和工厂模式。</p>
-<p>首先，策略模式中重要的Context角色在这里面是没有的，没有Context，也就没有用到组合的方式，而是使用工厂代替了。</p>
-<p>另外，这里面的UserPayServiceStrategyFactory其实只是维护了一个Map，并提供了register和get方法而已，而工厂模式其实是帮忙创建对象的，这里并没有用到。</p>
-<p>对于设计模式的学习，重要的是学习其思想，而不是代码实现！</p>
+// 反序列化，接收两个参数：json数据，反序列化的目标类字节码
+List&lt;User&gt; users = mapper.readValue(json, mapper.getTypeFactory().constructCollectionType(List.class, User.class));
+for (User u : users) {
+    System.out.println(&quot;u = &quot; + u);
+}</code></pre><p>}</p>
+<p>//json转任意复杂类型</p>
+<p>private ObjectMapper mapper = new ObjectMapper();<br>@Test<br>public void testJson() throws IOException {<br>    User user = new User();<br>    user.setId(8L);<br>    user.setAge(21);<br>    user.setName(“柳岩”);<br>    user.setUserName(“liuyan”);</p>
+<pre><code>// 序列化,得到对象集合的json字符串
+String json = mapper.writeValueAsString(Arrays.asList(user, user));
+
+// 反序列化，接收两个参数：json数据，反序列化的目标类字节码
+List&lt;User&gt; users = mapper.readValue(json, new TypeReference&lt;List&lt;User&gt;&gt;(){});
+for (User u : users) {
+    System.out.println(&quot;u = &quot; + u);
+}</code></pre><p>}</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 591235401@qq.com </span>
@@ -381,12 +374,12 @@ public static void register(Integer type,GetKey getKey){
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>如何简单的干掉if else</p>
+    <p><span class="copy-title">文章标题:</span>json与对象，集合之间的相互转换</p>
     
     <p><span class="copy-title">本文作者:</span><a  title="阿杜同学">阿杜同学</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-09-22, 11:47:21</p>
-    <p><span class="copy-title">最后更新:</span>2019-09-22, 11:47:21</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/09/22/%E5%A6%82%E4%BD%95%E7%AE%80%E5%8D%95%E7%9A%84%E5%B9%B2%E6%8E%89if-else/" title="如何简单的干掉if else">http://yoursite.com/2019/09/22/%E5%A6%82%E4%BD%95%E7%AE%80%E5%8D%95%E7%9A%84%E5%B9%B2%E6%8E%89if-else/</a>
+    <p><span class="copy-title">发布时间:</span>2020-01-07, 18:42:14</p>
+    <p><span class="copy-title">最后更新:</span>2020-01-07, 18:42:14</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/01/07/json%E4%B8%8E%E5%AF%B9%E8%B1%A1%EF%BC%8C%E9%9B%86%E5%90%88%E4%B9%8B%E9%97%B4%E7%9A%84%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/" title="json与对象，集合之间的相互转换">http://yoursite.com/2020/01/07/json%E4%B8%8E%E5%AF%B9%E8%B1%A1%EF%BC%8C%E9%9B%86%E5%90%88%E4%B9%8B%E9%97%B4%E7%9A%84%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
