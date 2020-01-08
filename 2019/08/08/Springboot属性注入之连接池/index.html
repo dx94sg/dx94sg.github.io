@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>日期后面多了个.0的解决办法 | Hexo</title>
-  <meta name="keywords" content=" 数据库 ">
-  <meta name="description" content="日期后面多了个.0的解决办法 | Hexo">
+  <title>Springboot属性注入之连接池 | Hexo</title>
+  <meta name="keywords" content=" springboot ">
+  <meta name="description" content="Springboot属性注入之连接池 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="pc2">
@@ -360,9 +360,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-日期后面多了个-0的解决办法" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Springboot属性注入之连接池" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">日期后面多了个.0的解决办法</h1>
+        <h1 class="article-title">Springboot属性注入之连接池</h1>
     
     <div class="article-meta">
         
@@ -370,21 +370,21 @@
         
         <span class="book">
             
-                <a  data-rel="数据库">数据库</a>
+                <a  data-rel="springboot">springboot</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a class="color4">数据库</a>
+            <a class="color1">springboot</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-01-08 18:13:14'>2020-01-08 18:12</time>
+        创建时间:<time class="date" title='更新时间: 2020-01-08 18:00:20'>2019-08-08 19:29</time>
         
     </div>
     <div class="article-meta">
@@ -433,14 +433,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>第一、直接在MySQL中解决：</p>
-<p>SELECT T.ID, T.USERNAME, DATE_FORMAT(t.birthday, ‘%Y-%m-%d %k:%i:%s’) as birthday FROM USERINFO T;</p>
-<p>SQL语句中加DATE_FORMAT函数就不会带微秒。</p>
-<p>第二、在Java中处理：</p>
-<p>public static String getFullFormateString(Date date){</p>
-<p>   SimpleDateFormat sdf = new SimpleDateFormat(“yyyy-MM-dd HH:mm:ss”);</p>
-<p>   return date == null ? “” : sdf.format(date);</p>
-<p>}</p>
+        <p><img src="/2019/08/08/Springboot%E5%B1%9E%E6%80%A7%E6%B3%A8%E5%85%A5%E4%B9%8B%E8%BF%9E%E6%8E%A5%E6%B1%A0/1.png" alt="在aplication.properties中定义属性"></p>
+<p><img src="/2019/08/08/Springboot%E5%B1%9E%E6%80%A7%E6%B3%A8%E5%85%A5%E4%B9%8B%E8%BF%9E%E6%8E%A5%E6%B1%A0/2.png" alt="创建java文件"></p>
+<p><img src="/2019/08/08/Springboot%E5%B1%9E%E6%80%A7%E6%B3%A8%E5%85%A5%E4%B9%8B%E8%BF%9E%E6%8E%A5%E6%B1%A0/2.5.png" alt="测试成功"><br><img src="/2019/08/08/Springboot%E5%B1%9E%E6%80%A7%E6%B3%A8%E5%85%A5%E4%B9%8B%E8%BF%9E%E6%8E%A5%E6%B1%A0/3.png" alt></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 591235401@qq.com </span>
@@ -450,12 +445,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>日期后面多了个.0的解决办法</p>
+    <p><span class="copy-title">文章标题:</span>Springboot属性注入之连接池</p>
     
     <p><span class="copy-title">本文作者:</span><a  title="阿杜同学">阿杜同学</a></p>
-    <p><span class="copy-title">发布时间:</span>2020-01-08, 18:12:23</p>
-    <p><span class="copy-title">最后更新:</span>2020-01-08, 18:12:23</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/01/08/%E6%97%A5%E6%9C%9F%E5%90%8E%E9%9D%A2%E5%A4%9A%E4%BA%86%E4%B8%AA-0%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" title="日期后面多了个.0的解决办法">http://yoursite.com/2020/01/08/%E6%97%A5%E6%9C%9F%E5%90%8E%E9%9D%A2%E5%A4%9A%E4%BA%86%E4%B8%AA-0%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</a>
+    <p><span class="copy-title">发布时间:</span>2019-08-08, 19:29:11</p>
+    <p><span class="copy-title">最后更新:</span>2019-08-08, 19:29:11</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/08/08/Springboot%E5%B1%9E%E6%80%A7%E6%B3%A8%E5%85%A5%E4%B9%8B%E8%BF%9E%E6%8E%A5%E6%B1%A0/" title="Springboot属性注入之连接池">http://yoursite.com/2019/08/08/Springboot%E5%B1%9E%E6%80%A7%E6%B3%A8%E5%85%A5%E4%B9%8B%E8%BF%9E%E6%8E%A5%E6%B1%A0/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
