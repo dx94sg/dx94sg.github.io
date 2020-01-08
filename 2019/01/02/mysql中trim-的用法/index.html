@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Hexo</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="Hexo">
+  <title>mysql中trim()的用法 | Hexo</title>
+  <meta name="keywords" content=" 数据库 ">
+  <meta name="description" content="mysql中trim()的用法 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="第一、直接在MySQL中解决： SELECT T.ID, T.USERNAME, DATE_FORMAT(t.birthday, ‘%Y-%m-%d %k:%i:%s’) as birthday FROM USERINFO T; SQL语句中加DATE_FORMAT函数就不会带微秒。 第二、在Java中处理： public static String getFullFormateString(Da">
 <meta property="og:type" content="article">
@@ -53,7 +53,7 @@
 </div>
 
 <body>
-<aside class="nav mobile">
+<aside class="nav">
     <div class="nav-left">
         <a href="/" class="avatar_target">
     <img class="avatar" src="/img/avatar.jpg" />
@@ -382,12 +382,66 @@
         </div>
     </div>
 </aside>
-<div class="post index">
+<div class="post">
     <div class="pjax">
-        <article class="index">
-            <div class="toc-ref">
+        <article id="post-mysql中trim-的用法" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#“这些年一直在提醒自己一件事，千万不要感动自己，大部分人看似努力，不过是愚蠢导致的。什么熬夜看书到天亮，连续几天只睡几小时，多久没放假了。如果这些东西也值得炫耀，那么富士康流水线上任何一个人都比你努力多了。人难免天生有自怜情绪，唯有时刻保持清醒，才看得清真正的价值在哪里。”-———《我们这一代人的困惑》"><span class="toc-text">“这些年一直在提醒自己一件事，千万不要感动自己，大部分人看似努力，不过是愚蠢导致的。什么熬夜看书到天亮，连续几天只睡几小时，多久没放假了。如果这些东西也值得炫耀，那么富士康流水线上任何一个人都比你努力多了。人难免天生有自怜情绪，唯有时刻保持清醒，才看得清真正的价值在哪里。”     ———《我们这一代人的困惑》</span></a></li></ol>
+        <h1 class="article-title">mysql中trim()的用法</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            
+                <a  data-rel="数据库">数据库</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color4">数据库</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2020-01-09 00:41:18'>2019-01-02 14:07</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+        <span class="top-comment" title="跳转至评论区">
+            <a href="#comments">
+                评论:<span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </a>
+        </span>
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        
     
 <style>
     .left-col .switch-btn,
@@ -400,10 +454,38 @@
     }
 </style>
 </div>
-            <h2 id="“这些年一直在提醒自己一件事，千万不要感动自己，大部分人看似努力，不过是愚蠢导致的。什么熬夜看书到天亮，连续几天只睡几小时，多久没放假了。如果这些东西也值得炫耀，那么富士康流水线上任何一个人都比你努力多了。人难免天生有自怜情绪，唯有时刻保持清醒，才看得清真正的价值在哪里。”-———《我们这一代人的困惑》"><a href="#“这些年一直在提醒自己一件事，千万不要感动自己，大部分人看似努力，不过是愚蠢导致的。什么熬夜看书到天亮，连续几天只睡几小时，多久没放假了。如果这些东西也值得炫耀，那么富士康流水线上任何一个人都比你努力多了。人难免天生有自怜情绪，唯有时刻保持清醒，才看得清真正的价值在哪里。”-———《我们这一代人的困惑》" class="headerlink" title="“这些年一直在提醒自己一件事，千万不要感动自己，大部分人看似努力，不过是愚蠢导致的。什么熬夜看书到天亮，连续几天只睡几小时，多久没放假了。如果这些东西也值得炫耀，那么富士康流水线上任何一个人都比你努力多了。人难免天生有自怜情绪，唯有时刻保持清醒，才看得清真正的价值在哪里。”     ———《我们这一代人的困惑》"></a>“这些年一直在提醒自己一件事，千万不要感动自己，大部分人看似努力，不过是愚蠢导致的。什么熬夜看书到天亮，连续几天只睡几小时，多久没放假了。如果这些东西也值得炫耀，那么富士康流水线上任何一个人都比你努力多了。人难免天生有自怜情绪，唯有时刻保持清醒，才看得清真正的价值在哪里。”     ———《我们这一代人的困惑》</h2>
-        </article>
-        
-        
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>去除两边空格</p>
+<p>SELECT TRIM(‘ 123 ‘) from xxx 结果123<br>去除左边空格</p>
+<p>SELECT LTRIM(‘ 123’) from xxx 结果123<br>去除右边空格</p>
+<p>SELECT RTRIM(‘123 ‘) from xxx 结果123<br>去除两边指定字符</p>
+<p>SELECT TRIM(BOTH ‘000’ FROM ‘000123000’); 结果123<br>去除左边指定字符</p>
+<p>SELECT TRIM(LEADING ‘000’ FROM ‘000123000’); 结果123000<br>去除右边指定字符</p>
+<p>SELECT TRIM(TRAILING ‘000’ FROM ‘000123000’); 结果000123</p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 591235401@qq.com </span>
+    </div>
+</article>
+
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>mysql中trim()的用法</p>
+    
+    <p><span class="copy-title">本文作者:</span><a  title="阿杜同学">阿杜同学</a></p>
+    <p><span class="copy-title">发布时间:</span>2019-01-02, 14:07:52</p>
+    <p><span class="copy-title">最后更新:</span>2019-01-02, 14:07:52</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/01/02/mysql%E4%B8%ADtrim-%E7%9A%84%E7%94%A8%E6%B3%95/" title="mysql中trim()的用法">http://yoursite.com/2019/01/02/mysql%E4%B8%ADtrim-%E7%9A%84%E7%94%A8%E6%B3%95/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
     <div id="comments"></div>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
 
@@ -423,6 +505,13 @@
         gitalk.render('comments')
     })
 </script>
+
+
+
+
+    
+
+
 
 
     </div>
