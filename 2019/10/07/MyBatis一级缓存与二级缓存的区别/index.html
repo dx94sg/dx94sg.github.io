@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>java判断一个字符串是否是指定的日期类型 | Hexo</title>
-  <meta name="keywords" content=" 工具 ">
-  <meta name="description" content="java判断一个字符串是否是指定的日期类型 | Hexo">
+  <title>MyBatis一级缓存与二级缓存的区别 | Hexo</title>
+  <meta name="keywords" content=" 数据库 ">
+  <meta name="description" content="MyBatis一级缓存与二级缓存的区别 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="pc2">
@@ -296,9 +296,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-java判断一个字符串是否是指定的日期类型" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-MyBatis一级缓存与二级缓存的区别" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">java判断一个字符串是否是指定的日期类型</h1>
+        <h1 class="article-title">MyBatis一级缓存与二级缓存的区别</h1>
     
     <div class="article-meta">
         
@@ -306,21 +306,21 @@
         
         <span class="book">
             
-                <a  data-rel="工具">工具</a>
+                <a  data-rel="数据库">数据库</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a class="color3">工具</a>
+            <a class="color4">数据库</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-01-08 18:03:38'>2018-10-08 15:02</time>
+        创建时间:<time class="date" title='更新时间: 2020-01-07 18:55:55'>2019-10-07 18:36</time>
         
     </div>
     <div class="article-meta">
@@ -369,8 +369,27 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>private static boolean isValidDate(String str) {<br>    boolean convertSuccess = true;<br>    // 指定日期格式为四位年/两位月份/两位日期，注意yyyy/MM/dd区分大小写；<br>    SimpleDateFormat format = new SimpleDateFormat(“yyyy/MM/dd HH:mm:ss”);<br>    try {<br>        // 设置lenient为false.<br>        // 否则SimpleDateFormat会比较宽松地验证日期，比如2007/02/29会被接受，并转换成2007/03/01<br>        format.setLenient(false);<br>        format.parse(str);<br>    } catch (Exception e) {<br>        // e.printStackTrace();<br>        // 如果throw java.text.ParseException或者NullPointerException，就说明格式不对<br>        convertSuccess = false;<br>    }<br>    return convertSuccess;<br>}</p>
+        <p>一级缓存<br>一级缓存是SqlSession级别的缓存。在操作数据库时需要构造sqlSession对象，在对象中有一个数据结构用于存储缓存数据。不同的sqlSession之间的缓存数据区域是互相不影响的。也就是他只能作用在同一个sqlSession中，不同的sqlSession中的缓存是互相不能读取的。<br>一级缓存的工作原理：</p>
+<p>用户发起查询请求，查找某条数据，sqlSession先去缓存中查找，是否有该数据，如果有，读取；<br>如果没有，从数据库中查询，并将查询到的数据放入一级缓存区域，供下次查找使用。<br>但sqlSession执行commit，即增删改操作时会清空缓存。这么做的目的是避免脏读。<br>如果commit不清空缓存，会有以下场景：A查询了某商品库存为10件，并将10件库存的数据存入缓存中，之后被客户买走了10件，数据被delete了，但是下次查询这件商品时，并不从数据库中查询，而是从缓存中查询，就会出现错误。<br>既然有了一级缓存，那么为什么要提供二级缓存呢？<br>二级缓存是mapper级别的缓存，多个SqlSession去操作同一个Mapper的sql语句，多个SqlSession可以共用二级缓存，二级缓存是跨SqlSession的。二级缓存的作用范围更大。<br>还有一个原因，实际开发中，MyBatis通常和Spring进行整合开发。Spring将事务放到Service中管理，对于每一个service中的sqlsession是不同的，这是通过mybatis-spring中的org.mybatis.spring.mapper.MapperScannerConfigurer创建sqlsession自动注入到service中的。 每次查询之后都要进行关闭sqlSession，关闭之后数据被清空。所以spring整合之后，如果没有事务，一级缓存是没有意义的。</p>
+<p>二级缓存</p>
+<p>二级缓存原理：二级缓存是mapper级别的缓存，多个SqlSession去操作同一个Mapper的sql语句，多个SqlSession可以共用二级缓存，二级缓存是跨SqlSession的。<br>UserMapper有一个二级缓存区域（按namespace分），其它mapper也有自己的二级缓存区域（按namespace分）。每一个namespace的mapper都有一个二级缓存区域，两个mapper的namespace如果相同，这两个mapper执行sql查询到数据将存在相同的二级缓存区域中。<br>开启二级缓存：<br>1，打开总开关<br>在MyBatis的配置文件中加入：</p>
+<settings>  
+   <!--开启二级缓存-->  
+    <setting name="cacheEnabled" value="true">  
+</setting></settings> 
+2，在需要开启二级缓存的mapper.xml中加入caceh标签
 
+<cache>
+3，让使用二级缓存的POJO类实现Serializable接口
+
+<p>public class User implements Serializable {}<br>测试一下</p>
+<p>@Test<br>public void testCache2() throws Exception {<br>    SqlSession sqlSession1 = sqlSessionFactory.openSession();<br>    SqlSession sqlSession2 = sqlSessionFactory.openSession();<br>    UserMapper userMapper1 = sqlSession1.getMapper(UserMapper.class);<br>    User user1 = userMapper1.findUserById(1);<br>    System.out.println(user1);<br>    sqlSession1.close();<br>    UserMapper userMapper2 = sqlSession2.getMapper(UserMapper.class);<br>    User user2 = userMapper2.findUserById(1);<br>    System.out.println(user2);<br>    sqlSession2.close();<br>}<br>输出结果：</p>
+<p>DEBUG [main] - Cache Hit Ratio [com.iot.mybatis.mapper.UserMapper]: 0.0<br>DEBUG [main] - Opening JDBC Connection<br>DEBUG [main] - Created connection 103887628.<br>DEBUG [main] - Setting autocommit to false on JDBC Connection [com.mysql.jdbc.JDBC4Connection@631330c]<br>DEBUG [main] - ==&gt;  Preparing: SELECT * FROM user WHERE id=?<br>DEBUG [main] - ==&gt; Parameters: 1(Integer)<br>DEBUG [main] - &lt;==      Total: 1<br>User [id=1, username=张三, sex=1, birthday=null, address=null]<br>DEBUG [main] - Resetting autocommit to true on JDBC Connection [com.mysql.jdbc.JDBC4Connection@631330c]<br>DEBUG [main] - Closing JDBC Connection [com.mysql.jdbc.JDBC4Connection@631330c]<br>DEBUG [main] - Returned connection 103887628 to pool.<br>DEBUG [main] - Cache Hit Ratio [com.iot.mybatis.mapper.UserMapper]: 0.5<br>User [id=1, username=张三, sex=1, birthday=null, address=null]<br>我们可以从打印的信息看出，两个sqlSession，去查询同一条数据，只发起一次select查询语句，第二次直接从Cache中读取。</p>
+<p>前面我们说到，Spring和MyBatis整合时， 每次查询之后都要进行关闭sqlSession，关闭之后数据被清空。所以spring整合之后，如果没有事务，一级缓存是没有意义的。那么如果开启二级缓存，关闭sqlsession后，会把该sqlsession一级缓存中的数据添加到namespace的二级缓存中。这样，缓存在sqlsession关闭之后依然存在。</p>
+<p>总结：<br>对于查询多commit少且用户对查询结果实时性要求不高，此时采用mybatis二级缓存技术降低数据库访问量，提高访问速度。</p>
+<p>但不能滥用二级缓存，二级缓存也有很多弊端，从MyBatis默认二级缓存是关闭的就可以看出来。<br>二级缓存是建立在同一个namespace下的，如果对表的操作查询可能有多个namespace，那么得到的数据就是错误的。<br>举个简单的例子:<br>订单和订单详情，orderMapper、orderDetailMapper。在查询订单详情时我们需要把订单信息也查询出来，那么这个订单详情的信息被二级缓存在orderDetailMapper的namespace中，这个时候有人要修改订单的基本信息，那就是在orderMapper的namespace下修改，他是不会影响到orderDetailMapper的缓存的，那么你再次查找订单详情时，拿到的是缓存的数据，这个数据其实已经是过时的。</p>
+<p>根据以上，想要使用二级缓存时需要想好两个问题：<br>1）对该表的操作与查询都在同一个namespace下，其他的namespace如果有操作，就会发生数据的脏读。<br>2）对关联表的查询，关联的所有表的操作都必须在同一个namespace。</p>
+</cache>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 591235401@qq.com </span>
     </div>
@@ -379,12 +398,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>java判断一个字符串是否是指定的日期类型</p>
+    <p><span class="copy-title">文章标题:</span>MyBatis一级缓存与二级缓存的区别</p>
     
     <p><span class="copy-title">本文作者:</span><a  title="阿杜同学">阿杜同学</a></p>
-    <p><span class="copy-title">发布时间:</span>2018-10-08, 15:02:27</p>
-    <p><span class="copy-title">最后更新:</span>2018-10-08, 15:02:27</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2018/10/08/java%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E6%98%AF%E6%8C%87%E5%AE%9A%E7%9A%84%E6%97%A5%E6%9C%9F%E7%B1%BB%E5%9E%8B/" title="java判断一个字符串是否是指定的日期类型">http://yoursite.com/2018/10/08/java%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E6%98%AF%E6%8C%87%E5%AE%9A%E7%9A%84%E6%97%A5%E6%9C%9F%E7%B1%BB%E5%9E%8B/</a>
+    <p><span class="copy-title">发布时间:</span>2019-10-07, 18:36:52</p>
+    <p><span class="copy-title">最后更新:</span>2019-10-07, 18:36:52</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/07/MyBatis%E4%B8%80%E7%BA%A7%E7%BC%93%E5%AD%98%E4%B8%8E%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98%E7%9A%84%E5%8C%BA%E5%88%AB/" title="MyBatis一级缓存与二级缓存的区别">http://yoursite.com/2019/10/07/MyBatis%E4%B8%80%E7%BA%A7%E7%BC%93%E5%AD%98%E4%B8%8E%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98%E7%9A%84%E5%8C%BA%E5%88%AB/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
