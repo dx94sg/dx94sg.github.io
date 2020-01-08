@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>json与对象，集合之间的相互转换 | Hexo</title>
-  <meta name="keywords" content=" 工具 ">
-  <meta name="description" content="json与对象，集合之间的相互转换 | Hexo">
+  <title>记录一次被批评的过程 | Hexo</title>
+  <meta name="keywords" content=" 数据库 ">
+  <meta name="description" content="记录一次被批评的过程 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="pc2">
@@ -332,9 +332,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-json与对象，集合之间的相互转换" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-记录一次被批评的过程" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">json与对象，集合之间的相互转换</h1>
+        <h1 class="article-title">记录一次被批评的过程</h1>
     
     <div class="article-meta">
         
@@ -342,21 +342,21 @@
         
         <span class="book">
             
-                <a  data-rel="工具">工具</a>
+                <a  data-rel="数据库">数据库</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a class="color3">工具</a>
+            <a class="color4">数据库</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-01-07 18:50:24'>2019-01-07 18:42</time>
+        创建时间:<time class="date" title='更新时间: 2020-01-08 18:19:23'>2018-11-15 20:04</time>
         
     </div>
     <div class="article-meta">
@@ -405,30 +405,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>// 对象转json<br>    private ObjectMapper mapper = new ObjectMapper();<br>    @Test<br>    public void testJson() throws JsonProcessingException {<br>        User user = new User();<br>        user.setId(8L);<br>        user.setAge(21);<br>        user.setName(“柳岩”);<br>        user.setUserName(“liuyan”);<br>        // 序列化<br>        String json = mapper.writeValueAsString(user);<br>        System.out.println(“json = “ + json);<br>    }</p>
-<p>// json转对象<br>private ObjectMapper mapper = new ObjectMapper();<br>@Test<br>public void testJson() throws IOException {<br>    User user = new User();<br>    user.setId(8L);<br>    user.setAge(21);<br>    user.setName(“柳岩”);<br>    user.setUserName(“liuyan”);<br>    // 序列化<br>    String json = mapper.writeValueAsString(user);</p>
-<pre><code>// 反序列化，接收两个参数：json数据，反序列化的目标类字节码
-User result = mapper.readValue(json, User.class);
-System.out.println(&quot;result = &quot; + result);</code></pre><p>}</p>
-<p>// json转集合<br>private ObjectMapper mapper = new ObjectMapper();<br>@Test<br>public void testJson() throws IOException {<br>    User user = new User();<br>    user.setId(8L);<br>    user.setAge(21);<br>    user.setName(“柳岩”);<br>    user.setUserName(“liuyan”);</p>
-<pre><code>// 序列化,得到对象集合的json字符串
-String json = mapper.writeValueAsString(Arrays.asList(user, user));
-
-// 反序列化，接收两个参数：json数据，反序列化的目标类字节码
-List&lt;User&gt; users = mapper.readValue(json, mapper.getTypeFactory().constructCollectionType(List.class, User.class));
-for (User u : users) {
-    System.out.println(&quot;u = &quot; + u);
-}</code></pre><p>}</p>
-<p>//json转任意复杂类型</p>
-<p>private ObjectMapper mapper = new ObjectMapper();<br>@Test<br>public void testJson() throws IOException {<br>    User user = new User();<br>    user.setId(8L);<br>    user.setAge(21);<br>    user.setName(“柳岩”);<br>    user.setUserName(“liuyan”);</p>
-<pre><code>// 序列化,得到对象集合的json字符串
-String json = mapper.writeValueAsString(Arrays.asList(user, user));
-
-// 反序列化，接收两个参数：json数据，反序列化的目标类字节码
-List&lt;User&gt; users = mapper.readValue(json, new TypeReference&lt;List&lt;User&gt;&gt;(){});
-for (User u : users) {
-    System.out.println(&quot;u = &quot; + u);
-}</code></pre><p>}</p>
+        <p>前天有个需求是将表a的内容复制到表b中，当时没想起要用insert into select，结果写了两个sql，一条select 一条inset，被经理看到批评了，特此记录一下，警醒自己。</p>
+<p>将一个table1的数据的部分字段复制到table2中，或者将整个table1复制到table2中</p>
+<p>语法:Insert into Table2(a,b, c) select a,b,c from Table1。</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 591235401@qq.com </span>
@@ -438,12 +417,12 @@ for (User u : users) {
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>json与对象，集合之间的相互转换</p>
+    <p><span class="copy-title">文章标题:</span>记录一次被批评的过程</p>
     
     <p><span class="copy-title">本文作者:</span><a  title="阿杜同学">阿杜同学</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-01-07, 18:42:14</p>
-    <p><span class="copy-title">最后更新:</span>2019-01-07, 18:42:14</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/01/07/json%E4%B8%8E%E5%AF%B9%E8%B1%A1%EF%BC%8C%E9%9B%86%E5%90%88%E4%B9%8B%E9%97%B4%E7%9A%84%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/" title="json与对象，集合之间的相互转换">http://yoursite.com/2019/01/07/json%E4%B8%8E%E5%AF%B9%E8%B1%A1%EF%BC%8C%E9%9B%86%E5%90%88%E4%B9%8B%E9%97%B4%E7%9A%84%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/</a>
+    <p><span class="copy-title">发布时间:</span>2018-11-15, 20:04:38</p>
+    <p><span class="copy-title">最后更新:</span>2018-11-15, 20:04:38</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2018/11/15/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E8%A2%AB%E6%89%B9%E8%AF%84%E7%9A%84%E8%BF%87%E7%A8%8B/" title="记录一次被批评的过程">http://yoursite.com/2018/11/15/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E8%A2%AB%E6%89%B9%E8%AF%84%E7%9A%84%E8%BF%87%E7%A8%8B/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
