@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>线程池 | Hexo</title>
+  <meta name="keywords" content=" 多线程 ">
+  <meta name="description" content="线程池 | Hexo">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="第一、直接在MySQL中解决： SELECT T.ID, T.USERNAME, DATE_FORMAT(t.birthday, ‘%Y-%m-%d %k:%i:%s’) as birthday FROM USERINFO T; SQL语句中加DATE_FORMAT函数就不会带微秒。 第二、在Java中处理： public static String getFullFormateString(Da">
+<meta property="og:type" content="article">
+<meta property="og:title" content="日期后面多了个.0的解决办法">
+<meta property="og:url" content="http://yoursite.com/2020/01/08/%E6%97%A5%E6%9C%9F%E5%90%8E%E9%9D%A2%E5%A4%9A%E4%BA%86%E4%B8%AA-0%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="第一、直接在MySQL中解决： SELECT T.ID, T.USERNAME, DATE_FORMAT(t.birthday, ‘%Y-%m-%d %k:%i:%s’) as birthday FROM USERINFO T; SQL语句中加DATE_FORMAT函数就不会带微秒。 第二、在Java中处理： public static String getFullFormateString(Da">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-01-08T10:12:23.000Z">
+<meta property="article:modified_time" content="2020-01-08T10:13:14.008Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.0.1" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.0.1" rel="stylesheet">
+
+<link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="/js/jquery.autocomplete.min.js?v=1.0.1" ></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.0.1" ></script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="true">
+  <input class="theme_blog_path" value="">
+</div>
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/avatar.jpg" />
+</a>
+<div class="author">
+    <span>阿杜同学</span>
+</div>
+
+<div class="icon">
+    
+        
+        <a title="csdn" href="https://blog.csdn.net/dx94sg" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-csdn"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="github" href="https://github.com/dx94sg" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-github"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="email" href="mailto:591235401@qq.com" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-email"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="qq" href="http://wpa.qq.com/msgrd?v=3&uin=591235401&site=qq&menu=yes" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-qq"></use>
+                </svg>
+            
+        </a>
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li><div class="all active">全部文章<small>(36)</small></div></li>
+    
+        
+            
+            <li><div data-rel="多线程">多线程<small>(11)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="杂谈">杂谈<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="数据库">数据库<small>(6)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="springboot">springboot<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="网络">网络<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="工具">工具<small>(6)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="jdk">jdk<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="js">js<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="数据库相关">数据库相关<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="git">git<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="jvm">jvm<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="安全">安全<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="设计模式">设计模式<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    
+    
+    </div>
+    <div><a class="about  hasFriend  site_url"  href="/about">关于</a><a style="width: 50%"  class="friends">友链</a></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="36">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="back-title-list"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <form onkeydown="if(event.keyCode==13){return false;}">
+        <input class="search" type="text" placeholder="Search..." autocomplete="off"id="local-search-input" >
+        <i class="cross"></i>
+        <span>
+            <label for="tagswitch">Tags:</label>
+            <input id="tagswitch" type="checkbox" style="display: none" />
+            <i id="tagsWitchIcon"></i>
+        </span>
+    </form>
+    <div class="tags-list">
+    
+    <li class="article-tag-list-item">
+        <a class="color4">多线程</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">杂谈</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">数据库</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color1">springboot</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">网络</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">工具</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">jdk</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">js</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color1">数据库相关</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">git</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">jvm</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">安全</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">设计模式</a>
+    </li>
+    
+    <div class="clearfix"></div>
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a  class="多线程 "
+           href="/2019/01/18/CountDownLatch%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B/"
+           data-tag="多线程"
+           data-author="" >
+            <span class="post-title" title="CountDownLatch使用案例">CountDownLatch使用案例</span>
+            <span class="post-date" title="2019-01-18 22:32:21">2019/01/18</span>
+        </a>
+        
+        <a  class="杂谈 "
+           href="/2019/02/21/2018%E5%B9%B4%E7%9A%84%E6%94%B6%E8%8E%B7%E4%BB%A5%E5%8F%8A2019%E5%B9%B4%E5%AD%A6%E4%B9%A0%E8%AE%A1%E5%88%92/"
+           data-tag="杂谈"
+           data-author="" >
+            <span class="post-title" title="2018年的收获以及2019年学习计划">2018年的收获以及2019年学习计划</span>
+            <span class="post-date" title="2019-02-21 14:38:35">2019/02/21</span>
+        </a>
+        
+        <a  class="数据库 "
+           href="/2019/10/07/MyBatis%E4%B8%80%E7%BA%A7%E7%BC%93%E5%AD%98%E4%B8%8E%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98%E7%9A%84%E5%8C%BA%E5%88%AB/"
+           data-tag="数据库"
+           data-author="" >
+            <span class="post-title" title="MyBatis一级缓存与二级缓存的区别">MyBatis一级缓存与二级缓存的区别</span>
+            <span class="post-date" title="2019-10-07 18:36:52">2019/10/07</span>
+        </a>
+        
+        <a  class="多线程 "
+           href="/2019/01/21/CyclicBarrier%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B/"
+           data-tag="多线程"
+           data-author="" >
+            <span class="post-title" title="CyclicBarrier使用案例">CyclicBarrier使用案例</span>
+            <span class="post-date" title="2019-01-21 19:40:42">2019/01/21</span>
+        </a>
+        
+        <a  class="数据库 "
+           href="/2019/01/03/OVER%E4%B8%ADOVER-PARTITION-BY-ORDER-BY-%E7%9A%84%E4%BD%BF%E7%94%A8/"
+           data-tag="数据库"
+           data-author="" >
+            <span class="post-title" title="OVER中OVER(PARTITION BY... ORDER BY...)的使用">OVER中OVER(PARTITION BY... ORDER BY...)的使用</span>
+            <span class="post-date" title="2019-01-03 14:58:50">2019/01/03</span>
+        </a>
+        
+        <a  class="多线程 "
+           href="/2019/01/25/Semaphore%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B/"
+           data-tag="多线程"
+           data-author="" >
+            <span class="post-title" title="Semaphore使用案例">Semaphore使用案例</span>
+            <span class="post-date" title="2019-01-25 21:30:10">2019/01/25</span>
+        </a>
+        
+        <a  class="springboot "
+           href="/2019/08/08/Springboot%E5%B1%9E%E6%80%A7%E6%B3%A8%E5%85%A5%E4%B9%8B%E8%BF%9E%E6%8E%A5%E6%B1%A0/"
+           data-tag="springboot"
+           data-author="" >
+            <span class="post-title" title="Springboot属性注入之连接池">Springboot属性注入之连接池</span>
+            <span class="post-date" title="2019-08-08 19:29:11">2019/08/08</span>
+        </a>
+        
+        <a  class="多线程 "
+           href="/2019/01/15/ThreadLocal/"
+           data-tag="多线程"
+           data-author="" >
+            <span class="post-title" title="ThreadLocal">ThreadLocal</span>
+            <span class="post-date" title="2019-01-15 22:47:20">2019/01/15</span>
+        </a>
+        
+        <a  class="多线程 "
+           href="/2019/01/05/Volatile%E5%85%B3%E9%94%AE%E5%AD%97/"
+           data-tag="多线程"
+           data-author="" >
+            <span class="post-title" title="Volatile关键字">Volatile关键字</span>
+            <span class="post-date" title="2019-01-05 20:52:21">2019/01/05</span>
+        </a>
+        
+        <a  class="网络 "
+           href="/2019/02/10/TCP%E4%B8%8EUDP/"
+           data-tag="网络"
+           data-author="" >
+            <span class="post-title" title="TCP与UDP">TCP与UDP</span>
+            <span class="post-date" title="2019-02-10 20:15:21">2019/02/10</span>
+        </a>
+        
+        <a  class="工具 "
+           href="/2018/10/08/java%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E6%98%AF%E6%8C%87%E5%AE%9A%E7%9A%84%E6%97%A5%E6%9C%9F%E7%B1%BB%E5%9E%8B/"
+           data-tag="工具"
+           data-author="" >
+            <span class="post-title" title="java判断一个字符串是否是指定的日期类型">java判断一个字符串是否是指定的日期类型</span>
+            <span class="post-date" title="2018-10-08 15:02:27">2018/10/08</span>
+        </a>
+        
+        <a  class="工具 "
+           href="/2019/01/07/json%E4%B8%8E%E5%AF%B9%E8%B1%A1%EF%BC%8C%E9%9B%86%E5%90%88%E4%B9%8B%E9%97%B4%E7%9A%84%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/"
+           data-tag="工具"
+           data-author="" >
+            <span class="post-title" title="json与对象，集合之间的相互转换">json与对象，集合之间的相互转换</span>
+            <span class="post-date" title="2019-01-07 18:42:14">2019/01/07</span>
+        </a>
+        
+        <a  class="jdk "
+           href="/2019/10/28/final%EF%BC%8Cfinally%EF%BC%8Cfinalize%EF%BC%8Cfinal%20static%20%E7%9A%84%E5%8C%BA%E5%88%AB/"
+           data-tag="jdk"
+           data-author="" >
+            <span class="post-title" title="final，finally，finalize，final static 的区别">final，finally，finalize，final static 的区别</span>
+            <span class="post-date" title="2019-10-28 20:21:45">2019/10/28</span>
+        </a>
+        
+        <a  class="数据库 "
+           href="/2019/01/02/mysql%E4%B8%ADtrim-%E7%9A%84%E7%94%A8%E6%B3%95/"
+           data-tag="数据库"
+           data-author="" >
+            <span class="post-title" title="mysql中trim()的用法">mysql中trim()的用法</span>
+            <span class="post-date" title="2019-01-02 14:07:52">2019/01/02</span>
+        </a>
+        
+        <a  class="js "
+           href="/2019/01/09/js%E6%97%A5%E6%9C%9F%E8%A1%A5%E9%9B%B6/"
+           data-tag="js"
+           data-author="" >
+            <span class="post-title" title="js日期补零">js日期补零</span>
+            <span class="post-date" title="2019-01-09 10:15:47">2019/01/09</span>
+        </a>
+        
+        <a  class="数据库 "
+           href="/2019/01/02/mysql-%E4%B8%ADconcat%EF%BC%8Cconcat-ws%EF%BC%8Csubstr%EF%BC%8Csubstring-index%E7%9A%84%E5%8C%BA%E5%88%AB/"
+           data-tag="数据库"
+           data-author="" >
+            <span class="post-title" title="mysql 中concat，concat_ws，substr，substring_index的区别">mysql 中concat，concat_ws，substr，substring_index的区别</span>
+            <span class="post-date" title="2019-01-02 12:57:01">2019/01/02</span>
+        </a>
+        
+        <a  class="数据库相关 "
+           href="/2019/10/29/sqlserver%E4%B8%ADCONVERT%E7%9A%84%E7%94%A8%E6%B3%95%E8%AE%B0%E5%BD%95/"
+           data-tag="数据库相关"
+           data-author="" >
+            <span class="post-title" title="sqlserver中CONVERT的用法记录">sqlserver中CONVERT的用法记录</span>
+            <span class="post-date" title="2019-10-29 11:26:43">2019/10/29</span>
+        </a>
+        
+        <a  class=""
+           href="/2020/01/07/pc2/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="pc2">pc2</span>
+            <span class="post-date" title="2020-01-07 00:21:59">2020/01/07</span>
+        </a>
+        
+        <a  class="工具 "
+           href="/2019/04/25/quertz%E5%B7%A5%E5%85%B7%E7%B1%BB/"
+           data-tag="工具"
+           data-author="" >
+            <span class="post-title" title="quertz工具类">quertz工具类</span>
+            <span class="post-date" title="2019-04-25 18:59:29">2019/04/25</span>
+        </a>
+        
+        <a  class="工具 "
+           href="/2019/09/23/yyyy-MM-dd%20HHssmm%E6%A0%BC%E5%BC%8F%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%97%A5%E6%9C%9F/"
+           data-tag="工具"
+           data-author="" >
+            <span class="post-title" title="yyyy-MM-dd HHssmm格式的字符串转日期">yyyy-MM-dd HHssmm格式的字符串转日期</span>
+            <span class="post-date" title="2019-09-23 12:37:22">2019/09/23</span>
+        </a>
+        
+        <a  class="多线程 "
+           href="/2019/01/04/volatile%E4%B8%8Esynchronized%E5%8C%BA%E5%88%AB/"
+           data-tag="多线程"
+           data-author="" >
+            <span class="post-title" title="volatile与synchronized区别">volatile与synchronized区别</span>
+            <span class="post-date" title="2019-01-04 21:47:20">2019/01/04</span>
+        </a>
+        
+        <a  class="多线程 "
+           href="/2019/05/21/wait,notify,notifyall/"
+           data-tag="多线程"
+           data-author="" >
+            <span class="post-title" title="wait,notify,notifyall">wait,notify,notifyall</span>
+            <span class="post-date" title="2019-05-21 14:25:10">2019/05/21</span>
+        </a>
+        
+        <a  class="git "
+           href="/2018/10/21/%E4%B8%8A%E4%BC%A0%E9%A1%B9%E7%9B%AE%E5%88%B0github%E7%9A%84%E6%AD%A5%E9%AA%A4/"
+           data-tag="git"
+           data-author="" >
+            <span class="post-title" title="上传项目到github的步骤">上传项目到github的步骤</span>
+            <span class="post-date" title="2018-10-21 19:38:28">2018/10/21</span>
+        </a>
+        
+        <a  class="jvm "
+           href="/2018/10/23/%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%92%8C%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E7%9A%84%E5%8C%BA%E5%88%AB/"
+           data-tag="jvm"
+           data-author="" >
+            <span class="post-title" title="内存溢出和内存泄露的区别">内存溢出和内存泄露的区别</span>
+            <span class="post-date" title="2018-10-23 21:32:21">2018/10/23</span>
+        </a>
+        
+        <a  class="安全 "
+           href="/2019/02/15/%E4%BD%BF%E7%94%A8Fileter%E9%98%B2%E6%AD%A2XSS%E6%94%BB%E5%87%BB/"
+           data-tag="安全"
+           data-author="" >
+            <span class="post-title" title="使用Fileter防止XSS攻击">使用Fileter防止XSS攻击</span>
+            <span class="post-date" title="2019-02-15 22:15:21">2019/02/15</span>
+        </a>
+        
+        <a  class="工具 "
+           href="/2019/01/03/%E5%8D%81%E5%88%86%E9%92%9F%E5%AD%A6%E4%BC%9AExcel%E5%AF%BC%E5%87%BA/"
+           data-tag="工具"
+           data-author="" >
+            <span class="post-title" title="十分钟学会Excel导出">十分钟学会Excel导出</span>
+            <span class="post-date" title="2019-01-03 13:47:21">2019/01/03</span>
+        </a>
+        
+        <a  class="工具 "
+           href="/2019/05/16/%E4%BD%BF%E7%94%A8jdbc%E8%BF%9E%E6%8E%A5sqlserver%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BB%A5%E5%8F%8A%E8%BF%9E%E6%8E%A5gbase%E6%95%B0%E6%8D%AE%E5%BA%93/"
+           data-tag="工具"
+           data-author="" >
+            <span class="post-title" title="使用jdbc连接sqlserver数据库以及连接gbase数据库">使用jdbc连接sqlserver数据库以及连接gbase数据库</span>
+            <span class="post-date" title="2019-05-16 13:26:10">2019/05/16</span>
+        </a>
+        
+        <a  class="jvm "
+           href="/2019/10/31/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E7%AE%97%E6%B3%95/"
+           data-tag="jvm"
+           data-author="" >
+            <span class="post-title" title="垃圾收集算法">垃圾收集算法</span>
+            <span class="post-date" title="2019-10-31 13:15:41">2019/10/31</span>
+        </a>
+        
+        <a  class="设计模式 "
+           href="/2019/09/22/%E5%A6%82%E4%BD%95%E7%AE%80%E5%8D%95%E7%9A%84%E5%B9%B2%E6%8E%89if-else/"
+           data-tag="设计模式"
+           data-author="" >
+            <span class="post-title" title="如何简单的干掉if else">如何简单的干掉if else</span>
+            <span class="post-date" title="2019-09-22 11:47:21">2019/09/22</span>
+        </a>
+        
+        <a  class="数据库 "
+           href="/2020/01/08/%E6%97%A5%E6%9C%9F%E5%90%8E%E9%9D%A2%E5%A4%9A%E4%BA%86%E4%B8%AA-0%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"
+           data-tag="数据库"
+           data-author="" >
+            <span class="post-title" title="日期后面多了个.0的解决办法">日期后面多了个.0的解决办法</span>
+            <span class="post-date" title="2020-01-08 18:12:23">2020/01/08</span>
+        </a>
+        
+        <a  class="多线程 "
+           href="/2019/11/02/%E6%82%B2%E8%A7%82%E9%94%81%E5%92%8C%E4%B9%90%E8%A7%82%E9%94%81/"
+           data-tag="多线程"
+           data-author="" >
+            <span class="post-title" title="悲观锁和乐观锁">悲观锁和乐观锁</span>
+            <span class="post-date" title="2019-11-02 20:18:49">2019/11/02</span>
+        </a>
+        
+        <a  class="多线程 "
+           href="/2018/11/05/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B%E5%8C%BA%E5%88%AB/"
+           data-tag="多线程"
+           data-author="" >
+            <span class="post-title" title="线程与进程区别">线程与进程区别</span>
+            <span class="post-date" title="2018-11-05 14:48:39">2018/11/05</span>
+        </a>
+        
+        <a  class="安全 "
+           href="/2019/02/11/%E8%A1%A8%E5%8D%95%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88(%E9%98%B2%E6%AD%A2Http%E9%87%8D%E5%A4%8D%E6%8F%90%E4%BA%A4/"
+           data-tag="安全"
+           data-author="" >
+            <span class="post-title" title="表单重复提交解决方案(防止Http重复提交">表单重复提交解决方案(防止Http重复提交</span>
+            <span class="post-date" title="2019-02-11 21:15:21">2019/02/11</span>
+        </a>
+        
+        <a  class="多线程 "
+           href="/2019/02/02/%E8%AF%BB%E5%86%99%E9%94%81/"
+           data-tag="多线程"
+           data-author="" >
+            <span class="post-title" title="读写锁">读写锁</span>
+            <span class="post-date" title="2019-02-02 21:42:22">2019/02/02</span>
+        </a>
+        
+        <a  class="数据库 "
+           href="/2018/11/15/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E8%A2%AB%E6%89%B9%E8%AF%84%E7%9A%84%E8%BF%87%E7%A8%8B/"
+           data-tag="数据库"
+           data-author="" >
+            <span class="post-title" title="记录一次被批评的过程">记录一次被批评的过程</span>
+            <span class="post-date" title="2018-11-15 20:04:38">2018/11/15</span>
+        </a>
+        
+        <a  class="多线程 "
+           href="/2019/01/31/%E7%BA%BF%E7%A8%8B%E6%B1%A0/"
+           data-tag="多线程"
+           data-author="" >
+            <span class="post-title" title="线程池">线程池</span>
+            <span class="post-date" title="2019-01-31 21:42:10">2019/01/31</span>
+        </a>
+        
+    </nav>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div class="post">
+    <div class="pjax">
+        <article id="post-线程池" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">线程池</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            
+                <a  data-rel="多线程">多线程</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color4">多线程</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2020-02-05 19:26:33'>2019-01-31 21:42</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+        <span class="top-comment" title="跳转至评论区">
+            <a href="#comments">
+                评论:<span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </a>
+        </span>
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>什么是线程池<br>Java中的线程池是运用场景最多的并发框架，几乎所有需要异步或并发执行任务的程序<br>都可以使用线程池。在开发过程中，合理地使用线程池能够带来3个好处。<br>第一：降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗。<br>第二：提高响应速度。当任务到达时，任务可以不需要等到线程创建就能立即执行。<br>第三：提高线程的可管理性。线程是稀缺资源，如果无限制地创建，不仅会消耗系统资源，<br>还会降低系统的稳定性，使用线程池可以进行统一分配、调优和监控。但是，要做到合理利用<br>线程池，必须对其实现原理了如指掌。<br>线程池作用<br>线程池是为突然大量爆发的线程设计的，通过有限的几个固定线程为大量的操作服务，减少了创建和销毁线程所需的时间，从而提高效率。<br>如果一个线程的时间非常长，就没必要用线程池了(不是不能作长时间操作，而是不宜。)，况且我们还不能控制线程池中线程的开始、挂起、和中止。<br>线程池的分类<br>ThreadPoolExecutor<br>Java是天生就支持并发的语言，支持并发意味着多线程，线程的频繁创建在高并发及大数据量是非常消耗资源的，因为java提供了线程池。在jdk1.5以前的版本中，线程池的使用是及其简陋的，但是在JDK1.5后，有了很大的改善。JDK1.5之后加入了java.util.concurrent包，java.util.concurrent包的加入给予开发人员开发并发程序以及解决并发问题很大的帮助。这篇文章主要介绍下并发包下的Executor接口，Executor接口虽然作为一个非常旧的接口（JDK1.5 2004年发布），但是很多程序员对于其中的一些原理还是不熟悉，因此写这篇文章来介绍下Executor接口，同时巩固下自己的知识。如果文章中有出现错误，欢迎大家指出。<br>Executor框架的最顶层实现是ThreadPoolExecutor类，Executors工厂类中提供的newScheduledThreadPool、newFixedThreadPool、newCachedThreadPool方法其实也只是ThreadPoolExecutor的构造函数参数不同而已。通过传入不同的参数，就可以构造出适用于不同应用场景下的线程池，那么它的底层原理是怎样实现的呢，这篇就来介绍下ThreadPoolExecutor线程池的运行过程。</p>
+<p>corePoolSize： 核心池的大小。 当有任务来之后，就会创建一个线程去执行任务，当线程池中的线程数目达到corePoolSize后，就会把到达的任务放到缓存队列当中<br>maximumPoolSize： 线程池最大线程数，它表示在线程池中最多能创建多少个线程；<br>keepAliveTime： 表示线程没有任务执行时最多保持多久时间会终止。<br>unit： 参数keepAliveTime的时间单位，有7种取值，在TimeUnit类中有7种静态属性：<br>线程池四种创建方式<br>Java通过Executors（jdk1.5并发包）提供四种线程池，分别为：<br>newCachedThreadPool创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。<br>案例演示:</p>
+<p>newFixedThreadPool 创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。<br>newScheduledThreadPool 创建一个定长线程池，支持定时及周期性任务执行。<br>newSingleThreadExecutor 创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。<br>newCachedThreadPool<br>创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。示例代码如下：<br>        // 无限大小线程池 jvm自动回收<br>        ExecutorService newCachedThreadPool = Executors.newCachedThreadPool();<br>        for (int i = 0; i &lt; 10; i++) {<br>            final int temp = i;<br>            newCachedThreadPool.execute(new Runnable() {</p>
+<pre><code>        @Override
+        public void run() {
+            try {
+                Thread.sleep(100);
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
+            System.out.println(Thread.currentThread().getName() + &quot;,i:&quot; + temp);
+
+        }
+    });
+}</code></pre><p>总结: 线程池为无限大，当执行第二个任务时第一个任务已经完成，会复用执行第一个任务的线程，而不用每次新建线程。<br>newFixedThreadPool<br>创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。示例代码如下：<br>ExecutorService newFixedThreadPool = Executors.newFixedThreadPool(5);<br>        for (int i = 0; i &lt; 10; i++) {<br>            final int temp = i;<br>            newFixedThreadPool.execute(new Runnable() {</p>
+<pre><code>        @Override
+        public void run() {
+            System.out.println(Thread.currentThread().getId() + &quot;,i:&quot; + temp);
+
+        }
+    });
+}</code></pre><p>总结:因为线程池大小为3，每个任务输出index后sleep 2秒，所以每两秒打印3个数字。<br>定长线程池的大小最好根据系统资源进行设置。如Runtime.getRuntime().availableProcessors()<br>newScheduledThreadPool<br>创建一个定长线程池，支持定时及周期性任务执行。延迟执行示例代码如下：<br>ScheduledExecutorService newScheduledThreadPool = Executors.newScheduledThreadPool(5);<br>        for (int i = 0; i &lt; 10; i++) {<br>            final int temp = i;<br>            newScheduledThreadPool.schedule(new Runnable() {<br>                public void run() {<br>                    System.out.println(“i:” + temp);<br>                }<br>            }, 3, TimeUnit.SECONDS);<br>}<br>表示延迟3秒执行。<br> newSingleThreadExecutor<br>创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。示例代码如下：<br>    ExecutorService newSingleThreadExecutor = Executors.newSingleThreadExecutor();<br>        for (int i = 0; i &lt; 10; i++) {<br>            final int index = i;<br>            newSingleThreadExecutor.execute(new Runnable() {</p>
+<pre><code>        @Override
+        public void run() {
+            System.out.println(&quot;index:&quot; + index);
+            try {
+                Thread.sleep(200);
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
+        }
+    });
+}</code></pre><p>注意: 结果依次输出，相当于顺序执行各个任务。</p>
+<p>线程池原理剖析<br>提交一个任务到线程池中，线程池的处理流程如下：<br>1、判断线程池里的核心线程是否都在执行任务，如果不是（核心线程空闲或者还有核心线程没有被创建）则创建一个新的工作线程来执行任务。如果核心线程都在执行任务，则进入下个流程。<br>2、线程池判断工作队列是否已满，如果工作队列没有满，则将新提交的任务存储在这个工作队列里。如果工作队列满了，则进入下个流程。<br>3、判断线程池里的线程是否都处于工作状态，如果没有，则创建一个新的工作线程来执行任务。如果已经满了，则交给饱和策略来处理这个任务。<br>合理配置线程池<br>要想合理的配置线程池，就必须首先分析任务特性，可以从以下几个角度来进行分析：<br>任务的性质：CPU密集型任务，IO密集型任务和混合型任务。<br>任务的优先级：高，中和低。<br>任务的执行时间：长，中和短。<br>任务的依赖性：是否依赖其他系统资源，如数据库连接。<br>任务性质不同的任务可以用不同规模的线程池分开处理。CPU密集型任务配置尽可能少的线程数量，如配置Ncpu+1个线程的线程池。IO密集型任务则由于需要等待IO操作，线程并不是一直在执行任务，则配置尽可能多的线程，如2*Ncpu。混合型的任务，如果可以拆分，则将其拆分成一个CPU密集型任务和一个IO密集型任务，只要这两个任务执行的时间相差不是太大，那么分解后执行的吞吐率要高于串行执行的吞吐率，如果这两个任务执行时间相差太大，则没必要进行分解。我们可以通过Runtime.getRuntime().availableProcessors()方法获得当前设备的CPU个数。<br>优先级不同的任务可以使用优先级队列PriorityBlockingQueue来处理。它可以让优先级高的任务先得到执行，需要注意的是如果一直有优先级高的任务提交到队列里，那么优先级低的任务可能永远不能执行。<br>执行时间不同的任务可以交给不同规模的线程池来处理，或者也可以使用优先级队列，让执行时间短的任务先执行。<br>依赖数据库连接池的任务，因为线程提交SQL后需要等待数据库返回结果，如果等待的时间越长CPU空闲时间就越长，那么线程数应该设置越大，这样才能更好的利用CPU。<br>一般总结哦，有其他更好的方式，希望各位留言，谢谢。</p>
+<p>CPU密集型时，任务可以少配置线程数，大概和机器的cpu核数相当，这样可以使得每个线程都在执行任务<br>IO密集型时，大部分线程都阻塞，故需要多配置线程数，2*cpu核数<br>操作系统之名称解释：<br>某些进程花费了绝大多数时间在计算上，而其他则在等待I/O上花费了大多是时间，<br>前者称为计算密集型（CPU密集型）computer-bound，后者称为I/O密集型，I/O-bound。</p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 591235401@qq.com </span>
+    </div>
+</article>
+
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>线程池</p>
+    
+    <p><span class="copy-title">本文作者:</span><a  title="阿杜同学">阿杜同学</a></p>
+    <p><span class="copy-title">发布时间:</span>2019-01-31, 21:42:10</p>
+    <p><span class="copy-title">最后更新:</span>2019-01-31, 21:42:10</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/01/31/%E7%BA%BF%E7%A8%8B%E6%B1%A0/" title="线程池">http://yoursite.com/2019/01/31/%E7%BA%BF%E7%A8%8B%E6%B1%A0/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
+    <div id="comments"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+<script type="text/javascript">
+    $.getScript('/js/gitalk.js', function () {
+        var gitalk = new Gitalk({
+            clientID: '358451e8503540ed9220',
+            clientSecret: '7510dba1aaa063ce351414ab3569222d370a330f',
+            repo: 'dx94sg.github.io',
+            owner: 'dx94sg',
+            admin: ['dx94sg'],
+            id: decodeURI(location.pathname),
+            distractionFreeMode: 'true',
+            language: 'zh-CN',
+            perPage: parseInt('10',10)
+        })
+        gitalk.render('comments')
+    })
+</script>
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">©2016-2019 Yelog</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full"><span class="min "></span></button>
+<button class="post-toc-menu"><span class="post-toc-menu-icons"></span></button>
+<div class="post-toc"><span class="post-toc-title">目录</span>
+    <div class="post-toc-content">
+
+    </div>
+</div>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+<div class="acParent"></div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.0.1" ></script>
+
+<script src="/js/script.js?v=1.0.1" ></script>
+<script>
+    var img_resize = 'default';
+    /*作者、标签的自动补全*/
+    $(function () {
+        $('.search').AutoComplete({
+            'data': ['#多线程','#杂谈','#数据库','#springboot','#网络','#工具','#jdk','#js','#数据库相关','#git','#jvm','#安全','#设计模式',],
+            'itemHeight': 20,
+            'width': 418
+        }).AutoComplete('show');
+    })
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $(".post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().split('\n').length - 1, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: #fafafa;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+        .nav .hide-list.fullscreen {
+            left: 492px
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+    .post .pjax article .article-entry>ol, .post .pjax article .article-entry>ul, .post .pjax article>ol, .post .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    .post .pjax article .article-entry li>ol, .post .pjax article .article-entry li>ul,.post .pjax article li>ol, .post .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .post .pjax article .article-entry>ol>li, .post .pjax article .article-entry>ul>li,.post .pjax article>ol>li, .post .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    .post .pjax article .article-entry li>ol>li, .post .pjax article .article-entry li>ul>li,.post .pjax article li>ol>li, .post .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.3;
+        background: url("https://i.loli.net/2019/07/22/5d3521411f3f169375.png");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>
