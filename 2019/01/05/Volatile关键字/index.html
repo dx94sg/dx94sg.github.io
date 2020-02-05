@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>sqlserver中CONVERT的用法记录 | Hexo</title>
-  <meta name="keywords" content=" 数据库相关 ">
-  <meta name="description" content="sqlserver中CONVERT的用法记录 | Hexo">
+  <title>Volatile关键字 | Hexo</title>
+  <meta name="keywords" content=" 多线程 ">
+  <meta name="description" content="Volatile关键字 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="pc2">
@@ -512,9 +512,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-sqlserver中CONVERT的用法记录" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Volatile关键字" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">sqlserver中CONVERT的用法记录</h1>
+        <h1 class="article-title">Volatile关键字</h1>
     
     <div class="article-meta">
         
@@ -522,21 +522,21 @@
         
         <span class="book">
             
-                <a  data-rel="数据库相关">数据库相关</a>
+                <a  data-rel="多线程">多线程</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a class="color1">数据库相关</a>
+            <a class="color4">多线程</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-01-07 11:28:54'>2019-10-29 11:26</time>
+        创建时间:<time class="date" title='更新时间: 2020-02-05 19:14:41'>2019-01-05 20:52</time>
         
     </div>
     <div class="article-meta">
@@ -585,7 +585,60 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Select CONVERT(varchar(100), GETDATE(), 0): 05 16 2006 10:57AM<br>Select CONVERT(varchar(100), GETDATE(), 1): 05/16/06<br>Select CONVERT(varchar(100), GETDATE(), 2): 06.05.16<br>Select CONVERT(varchar(100), GETDATE(), 3): 16/05/06<br>Select CONVERT(varchar(100), GETDATE(), 4): 16.05.06<br>Select CONVERT(varchar(100), GETDATE(), 5): 16-05-06<br>Select CONVERT(varchar(100), GETDATE(), 6): 16 05 06<br>Select CONVERT(varchar(100), GETDATE(), 7): 05 16, 06<br>Select CONVERT(varchar(100), GETDATE(), 8): 10:57:46<br>Select CONVERT(varchar(100), GETDATE(), 9): 05 16 2006 10:57:46:827AM<br>Select CONVERT(varchar(100), GETDATE(), 10): 05-16-06<br>Select CONVERT(varchar(100), GETDATE(), 11): 06/05/16<br>Select CONVERT(varchar(100), GETDATE(), 12): 060516<br>Select CONVERT(varchar(100), GETDATE(), 13): 16 05 2006 10:57:46:937<br>Select CONVERT(varchar(100), GETDATE(), 14): 10:57:46:967<br>Select CONVERT(varchar(100), GETDATE(), 20): 2006-05-16 10:57:47<br>Select CONVERT(varchar(100), GETDATE(), 21): 2006-05-16 10:57:47.157<br>Select CONVERT(varchar(100), GETDATE(), 22): 05/16/06 10:57:47 AM<br>Select CONVERT(varchar(100), GETDATE(), 23): 2006-05-16<br>Select CONVERT(varchar(100), GETDATE(), 24): 10:57:47<br>Select CONVERT(varchar(100), GETDATE(), 25): 2006-05-16 10:57:47.250<br>Select CONVERT(varchar(100), GETDATE(), 100): 05 16 2006 10:57AM<br>Select CONVERT(varchar(100), GETDATE(), 101): 05/16/2006<br>Select CONVERT(varchar(100), GETDATE(), 102): 2006.05.16<br>Select CONVERT(varchar(100), GETDATE(), 103): 16/05/2006<br>Select CONVERT(varchar(100), GETDATE(), 104): 16.05.2006<br>Select CONVERT(varchar(100), GETDATE(), 105): 16-05-2006<br>Select CONVERT(varchar(100), GETDATE(), 106): 16 05 2006<br>Select CONVERT(varchar(100), GETDATE(), 107): 05 16, 2006<br>Select CONVERT(varchar(100), GETDATE(), 108): 10:57:49<br>Select CONVERT(varchar(100), GETDATE(), 109): 05 16 2006 10:57:49:437AM<br>Select CONVERT(varchar(100), GETDATE(), 110): 05-16-2006<br>Select CONVERT(varchar(100), GETDATE(), 111): 2006/05/16<br>Select CONVERT(varchar(100), GETDATE(), 112): 20060516<br>Select CONVERT(varchar(100), GETDATE(), 113): 16 05 2006 10:57:49:513<br>Select CONVERT(varchar(100), GETDATE(), 114): 10:57:49:547<br>Select CONVERT(varchar(100), GETDATE(), 120): 2006-05-16 10:57:49<br>Select CONVERT(varchar(100), GETDATE(), 121): 2006-05-16 10:57:49.700<br>Select CONVERT(varchar(100), GETDATE(), 126): 2006-05-16T10:57:49.827<br>Select CONVERT(varchar(100), GETDATE(), 130): 18 ???? ?????? 1427 10:57:49:907AM<br>Select CONVERT(varchar(100), GETDATE(), 131): 18/04/1427 10:57:49:920AM </p>
+        <p>Volatile 关键字的作用是变量在多个线程之间可见。</p>
+<p>class ThreadVolatileDemo extends Thread {<br>    public    boolean flag = true;<br>    @Override<br>    public void run() {<br>        System.out.println(“开始执行子线程….”);<br>        while (flag) {<br>        }<br>        System.out.println(“线程停止”);<br>    }<br>    public void setRuning(boolean flag) {<br>        this.flag = flag;<br>    }</p>
+<p>}</p>
+<p>public class ThreadVolatile {<br>    public static void main(String[] args) throws InterruptedException {<br>        ThreadVolatileDemo threadVolatileDemo = new ThreadVolatileDemo();<br>        threadVolatileDemo.start();<br>        Thread.sleep(3000);<br>        threadVolatileDemo.setRuning(false);<br>        System.out.println(“flag 已经设置成false”);<br>        Thread.sleep(1000);<br>        System.out.println(threadVolatileDemo.flag);</p>
+<pre><code>}</code></pre><p>}</p>
+<p>运行结果：开始执行子线程。。</p>
+<p>已经将结果设置为fasle为什么？还一直在运行呢。<br>原因:线程之间是不可见的，读取的是副本，没有及时读取到主内存结果。<br>“主内存”中取值解决办法使用Volatile关键字将解决线程之间可见性, 强制线程每次读取该值的时候都去主内存读取。</p>
+<p>Volatile非原子性<br>注意: Volatile非原子性<br>public class VolatileNoAtomic extends Thread {<br>    private static volatile int count;</p>
+<pre><code>// private static AtomicInteger count = new AtomicInteger(0);
+private static void addCount() {
+    for (int i = 0; i &lt; 1000; i++) {
+        count++;
+        // count.incrementAndGet();
+    }
+    System.out.println(count);
+}
+
+public void run() {
+    addCount();
+}
+
+public static void main(String[] args) {
+
+    VolatileNoAtomic[] arr = new VolatileNoAtomic[100];
+    for (int i = 0; i &lt; 10; i++) {
+        arr[i] = new VolatileNoAtomic();
+    }
+
+    for (int i = 0; i &lt; 10; i++) {
+        arr[i].start();
+    }
+}</code></pre><p>}</p>
+<p>结果发现 数据不同步，因为Volatile不用具备原子性。</p>
+<p>使用AtomicInteger原子类<br>AtomicInteger是一个提供原子操作的Integer类，通过线程安全的方式操作加减。<br>public class VolatileNoAtomic extends Thread {<br>    static int count = 0;<br>    private static AtomicInteger atomicInteger = new AtomicInteger(0);</p>
+<pre><code>@Override
+public void run() {
+    for (int i = 0; i &lt; 1000; i++) {
+        //等同于i++
+        atomicInteger.incrementAndGet();
+    }
+    System.out.println(count);
+}
+
+public static void main(String[] args) {
+    // 初始化10个线程
+    VolatileNoAtomic[] volatileNoAtomic = new VolatileNoAtomic[10];
+    for (int i = 0; i &lt; 10; i++) {
+        // 创建
+        volatileNoAtomic[i] = new VolatileNoAtomic();
+    }
+    for (int i = 0; i &lt; volatileNoAtomic.length; i++) {
+        volatileNoAtomic[i].start();
+    }
+}</code></pre><p>}</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 591235401@qq.com </span>
@@ -595,12 +648,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>sqlserver中CONVERT的用法记录</p>
+    <p><span class="copy-title">文章标题:</span>Volatile关键字</p>
     
     <p><span class="copy-title">本文作者:</span><a  title="阿杜同学">阿杜同学</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-10-29, 11:26:43</p>
-    <p><span class="copy-title">最后更新:</span>2019-10-29, 11:26:43</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/29/sqlserver%E4%B8%ADCONVERT%E7%9A%84%E7%94%A8%E6%B3%95%E8%AE%B0%E5%BD%95/" title="sqlserver中CONVERT的用法记录">http://yoursite.com/2019/10/29/sqlserver%E4%B8%ADCONVERT%E7%9A%84%E7%94%A8%E6%B3%95%E8%AE%B0%E5%BD%95/</a>
+    <p><span class="copy-title">发布时间:</span>2019-01-05, 20:52:21</p>
+    <p><span class="copy-title">最后更新:</span>2019-01-05, 20:52:21</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/01/05/Volatile%E5%85%B3%E9%94%AE%E5%AD%97/" title="Volatile关键字">http://yoursite.com/2019/01/05/Volatile%E5%85%B3%E9%94%AE%E5%AD%97/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

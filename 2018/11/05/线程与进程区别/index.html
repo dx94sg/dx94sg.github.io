@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>sqlserver中CONVERT的用法记录 | Hexo</title>
-  <meta name="keywords" content=" 数据库相关 ">
-  <meta name="description" content="sqlserver中CONVERT的用法记录 | Hexo">
+  <title>线程与进程区别 | Hexo</title>
+  <meta name="keywords" content=" 多线程 ">
+  <meta name="description" content="线程与进程区别 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="pc2">
@@ -512,9 +512,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-sqlserver中CONVERT的用法记录" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-线程与进程区别" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">sqlserver中CONVERT的用法记录</h1>
+        <h1 class="article-title">线程与进程区别</h1>
     
     <div class="article-meta">
         
@@ -522,21 +522,21 @@
         
         <span class="book">
             
-                <a  data-rel="数据库相关">数据库相关</a>
+                <a  data-rel="多线程">多线程</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a class="color1">数据库相关</a>
+            <a class="color4">多线程</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-01-07 11:28:54'>2019-10-29 11:26</time>
+        创建时间:<time class="date" title='更新时间: 2020-02-05 19:10:46'>2018-11-05 14:48</time>
         
     </div>
     <div class="article-meta">
@@ -585,7 +585,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Select CONVERT(varchar(100), GETDATE(), 0): 05 16 2006 10:57AM<br>Select CONVERT(varchar(100), GETDATE(), 1): 05/16/06<br>Select CONVERT(varchar(100), GETDATE(), 2): 06.05.16<br>Select CONVERT(varchar(100), GETDATE(), 3): 16/05/06<br>Select CONVERT(varchar(100), GETDATE(), 4): 16.05.06<br>Select CONVERT(varchar(100), GETDATE(), 5): 16-05-06<br>Select CONVERT(varchar(100), GETDATE(), 6): 16 05 06<br>Select CONVERT(varchar(100), GETDATE(), 7): 05 16, 06<br>Select CONVERT(varchar(100), GETDATE(), 8): 10:57:46<br>Select CONVERT(varchar(100), GETDATE(), 9): 05 16 2006 10:57:46:827AM<br>Select CONVERT(varchar(100), GETDATE(), 10): 05-16-06<br>Select CONVERT(varchar(100), GETDATE(), 11): 06/05/16<br>Select CONVERT(varchar(100), GETDATE(), 12): 060516<br>Select CONVERT(varchar(100), GETDATE(), 13): 16 05 2006 10:57:46:937<br>Select CONVERT(varchar(100), GETDATE(), 14): 10:57:46:967<br>Select CONVERT(varchar(100), GETDATE(), 20): 2006-05-16 10:57:47<br>Select CONVERT(varchar(100), GETDATE(), 21): 2006-05-16 10:57:47.157<br>Select CONVERT(varchar(100), GETDATE(), 22): 05/16/06 10:57:47 AM<br>Select CONVERT(varchar(100), GETDATE(), 23): 2006-05-16<br>Select CONVERT(varchar(100), GETDATE(), 24): 10:57:47<br>Select CONVERT(varchar(100), GETDATE(), 25): 2006-05-16 10:57:47.250<br>Select CONVERT(varchar(100), GETDATE(), 100): 05 16 2006 10:57AM<br>Select CONVERT(varchar(100), GETDATE(), 101): 05/16/2006<br>Select CONVERT(varchar(100), GETDATE(), 102): 2006.05.16<br>Select CONVERT(varchar(100), GETDATE(), 103): 16/05/2006<br>Select CONVERT(varchar(100), GETDATE(), 104): 16.05.2006<br>Select CONVERT(varchar(100), GETDATE(), 105): 16-05-2006<br>Select CONVERT(varchar(100), GETDATE(), 106): 16 05 2006<br>Select CONVERT(varchar(100), GETDATE(), 107): 05 16, 2006<br>Select CONVERT(varchar(100), GETDATE(), 108): 10:57:49<br>Select CONVERT(varchar(100), GETDATE(), 109): 05 16 2006 10:57:49:437AM<br>Select CONVERT(varchar(100), GETDATE(), 110): 05-16-2006<br>Select CONVERT(varchar(100), GETDATE(), 111): 2006/05/16<br>Select CONVERT(varchar(100), GETDATE(), 112): 20060516<br>Select CONVERT(varchar(100), GETDATE(), 113): 16 05 2006 10:57:49:513<br>Select CONVERT(varchar(100), GETDATE(), 114): 10:57:49:547<br>Select CONVERT(varchar(100), GETDATE(), 120): 2006-05-16 10:57:49<br>Select CONVERT(varchar(100), GETDATE(), 121): 2006-05-16 10:57:49.700<br>Select CONVERT(varchar(100), GETDATE(), 126): 2006-05-16T10:57:49.827<br>Select CONVERT(varchar(100), GETDATE(), 130): 18 ???? ?????? 1427 10:57:49:907AM<br>Select CONVERT(varchar(100), GETDATE(), 131): 18/04/1427 10:57:49:920AM </p>
+        <p>每个正在系统上运行的程序都是一个进程。每个进程包含一到多个线程。线程是一组指令的集合，或者是程序的特殊段，它可以在程序里独立执行。也可以把它理解为代码运行的上下文。所以线程基本上是轻量级的进程，它负责在单个程序里执行多任务。通常由操作系统负责多个线程的调度和执行。<br>使用线程可以把占据时间长的程序中的任务放到后台去处理，程序的运行速度可能加快，在一些等待的任务实现上如用户输入、文件读写和网络收发数据等，线程就比较有用了。在这种情况下可以释放一些珍贵的资源如内存占用等等。<br>如果有大量的线程,会影响性能，因为操作系统需要在它们之间切换，更多的线程需要更多的内存空间，线程的中止需要考虑其对程序运行的影响。通常块模型数据是在多个线程间共享的，需要防止线程死锁情况的发生。<br>总结:进程是所有线程的集合，每一个线程是进程中的一条执行路径。</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 591235401@qq.com </span>
@@ -595,12 +595,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>sqlserver中CONVERT的用法记录</p>
+    <p><span class="copy-title">文章标题:</span>线程与进程区别</p>
     
     <p><span class="copy-title">本文作者:</span><a  title="阿杜同学">阿杜同学</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-10-29, 11:26:43</p>
-    <p><span class="copy-title">最后更新:</span>2019-10-29, 11:26:43</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/29/sqlserver%E4%B8%ADCONVERT%E7%9A%84%E7%94%A8%E6%B3%95%E8%AE%B0%E5%BD%95/" title="sqlserver中CONVERT的用法记录">http://yoursite.com/2019/10/29/sqlserver%E4%B8%ADCONVERT%E7%9A%84%E7%94%A8%E6%B3%95%E8%AE%B0%E5%BD%95/</a>
+    <p><span class="copy-title">发布时间:</span>2018-11-05, 14:48:39</p>
+    <p><span class="copy-title">最后更新:</span>2018-11-05, 14:48:39</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2018/11/05/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B%E5%8C%BA%E5%88%AB/" title="线程与进程区别">http://yoursite.com/2018/11/05/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B%E5%8C%BA%E5%88%AB/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>

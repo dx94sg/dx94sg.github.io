@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>sqlserver中CONVERT的用法记录 | Hexo</title>
-  <meta name="keywords" content=" 数据库相关 ">
-  <meta name="description" content="sqlserver中CONVERT的用法记录 | Hexo">
+  <title>十分钟学会Excel导出 | Hexo</title>
+  <meta name="keywords" content=" 工具 ">
+  <meta name="description" content="十分钟学会Excel导出 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="pc2">
@@ -512,9 +512,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-sqlserver中CONVERT的用法记录" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-十分钟学会Excel导出" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">sqlserver中CONVERT的用法记录</h1>
+        <h1 class="article-title">十分钟学会Excel导出</h1>
     
     <div class="article-meta">
         
@@ -522,21 +522,21 @@
         
         <span class="book">
             
-                <a  data-rel="数据库相关">数据库相关</a>
+                <a  data-rel="工具">工具</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a class="color1">数据库相关</a>
+            <a class="color3">工具</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-01-07 11:28:54'>2019-10-29 11:26</time>
+        创建时间:<time class="date" title='更新时间: 2020-02-05 19:14:50'>2019-01-03 13:47</time>
         
     </div>
     <div class="article-meta">
@@ -585,7 +585,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Select CONVERT(varchar(100), GETDATE(), 0): 05 16 2006 10:57AM<br>Select CONVERT(varchar(100), GETDATE(), 1): 05/16/06<br>Select CONVERT(varchar(100), GETDATE(), 2): 06.05.16<br>Select CONVERT(varchar(100), GETDATE(), 3): 16/05/06<br>Select CONVERT(varchar(100), GETDATE(), 4): 16.05.06<br>Select CONVERT(varchar(100), GETDATE(), 5): 16-05-06<br>Select CONVERT(varchar(100), GETDATE(), 6): 16 05 06<br>Select CONVERT(varchar(100), GETDATE(), 7): 05 16, 06<br>Select CONVERT(varchar(100), GETDATE(), 8): 10:57:46<br>Select CONVERT(varchar(100), GETDATE(), 9): 05 16 2006 10:57:46:827AM<br>Select CONVERT(varchar(100), GETDATE(), 10): 05-16-06<br>Select CONVERT(varchar(100), GETDATE(), 11): 06/05/16<br>Select CONVERT(varchar(100), GETDATE(), 12): 060516<br>Select CONVERT(varchar(100), GETDATE(), 13): 16 05 2006 10:57:46:937<br>Select CONVERT(varchar(100), GETDATE(), 14): 10:57:46:967<br>Select CONVERT(varchar(100), GETDATE(), 20): 2006-05-16 10:57:47<br>Select CONVERT(varchar(100), GETDATE(), 21): 2006-05-16 10:57:47.157<br>Select CONVERT(varchar(100), GETDATE(), 22): 05/16/06 10:57:47 AM<br>Select CONVERT(varchar(100), GETDATE(), 23): 2006-05-16<br>Select CONVERT(varchar(100), GETDATE(), 24): 10:57:47<br>Select CONVERT(varchar(100), GETDATE(), 25): 2006-05-16 10:57:47.250<br>Select CONVERT(varchar(100), GETDATE(), 100): 05 16 2006 10:57AM<br>Select CONVERT(varchar(100), GETDATE(), 101): 05/16/2006<br>Select CONVERT(varchar(100), GETDATE(), 102): 2006.05.16<br>Select CONVERT(varchar(100), GETDATE(), 103): 16/05/2006<br>Select CONVERT(varchar(100), GETDATE(), 104): 16.05.2006<br>Select CONVERT(varchar(100), GETDATE(), 105): 16-05-2006<br>Select CONVERT(varchar(100), GETDATE(), 106): 16 05 2006<br>Select CONVERT(varchar(100), GETDATE(), 107): 05 16, 2006<br>Select CONVERT(varchar(100), GETDATE(), 108): 10:57:49<br>Select CONVERT(varchar(100), GETDATE(), 109): 05 16 2006 10:57:49:437AM<br>Select CONVERT(varchar(100), GETDATE(), 110): 05-16-2006<br>Select CONVERT(varchar(100), GETDATE(), 111): 2006/05/16<br>Select CONVERT(varchar(100), GETDATE(), 112): 20060516<br>Select CONVERT(varchar(100), GETDATE(), 113): 16 05 2006 10:57:49:513<br>Select CONVERT(varchar(100), GETDATE(), 114): 10:57:49:547<br>Select CONVERT(varchar(100), GETDATE(), 120): 2006-05-16 10:57:49<br>Select CONVERT(varchar(100), GETDATE(), 121): 2006-05-16 10:57:49.700<br>Select CONVERT(varchar(100), GETDATE(), 126): 2006-05-16T10:57:49.827<br>Select CONVERT(varchar(100), GETDATE(), 130): 18 ???? ?????? 1427 10:57:49:907AM<br>Select CONVERT(varchar(100), GETDATE(), 131): 18/04/1427 10:57:49:920AM </p>
+        <p>Excel导出在内网系统一般用的很多,一般分为POI和JXL两种,前者支持excel2003(xls)和Excel2007(xlsx),而后者只支持Excel2003(xls),所以我们这里使用POI来做Excel 的导出;我们以导出员工信息的数据为例子:</p>
+<p>第一步:</p>
+<p>导入POI的jar包</p>
+<p>第二步,在前台写一个ecxel导出的按钮,请注意,这个地方不能使用Ajax请求,因为我们接受的是一个OutputStream,我们接收到的数据是直接保存或者打开,所以这个地方不能使用ajax的data来接受返回的数据,我们使用window.open()的方式:</p>
+<p>第三步:后台接受请求并做处理</p>
+<p>@RequestMapping(“exportData”)<br>@ResponseBody<br>public void exportData(HttpServletResponse response) throws IOException {<br>    //查询所有员工数据<br>    List<Employee> list = service.list();<br>    //设置下载的head信息<br>    String fileName = new String(“员工数据.xls”.getBytes(“utf-8”), “iso8859-1”);<br>    response.setHeader(“Content-Disposition”, “attachment;filename=” + fileName);<br>    //创建一个excel<br>    Workbook wb = new HSSFWorkbook();<br>    //创建一个工作表<br>    Sheet sheet = wb.createSheet(“员工数据”);<br>    //创建一行<br>    Row row = sheet.createRow(0);<br>    //创建这一行的单元格并设置内容<br>    row.createCell(0).setCellValue(“编号”);<br>    row.createCell(1).setCellValue(“姓名”);<br>    row.createCell(2).setCellValue(“邮箱”);<br>    row.createCell(3).setCellValue(“年龄”);<br>    //创建第二行,并使用循环把每一行的数据设置进去<br>    Row employeeRow = null;<br>    for (int i = 0; i &lt; list.size(); i++) {<br>        Employee employee = list.get(i);<br>        employeeRow = sheet.createRow(i + 1);<br>        employeeRow.createCell(0).setCellValue(employee.getId());<br>        employeeRow.createCell(1).setCellValue(employee.getName());<br>        employeeRow.createCell(2).setCellValue(employee.getEmail());<br>        employeeRow.createCell(3).setCellValue(employee.getAge());<br>    }<br>    //输出<br>    wb.write(response.getOutputStream());<br>    response.getOutputStream().close();<br>}</Employee></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 591235401@qq.com </span>
@@ -595,12 +600,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>sqlserver中CONVERT的用法记录</p>
+    <p><span class="copy-title">文章标题:</span>十分钟学会Excel导出</p>
     
     <p><span class="copy-title">本文作者:</span><a  title="阿杜同学">阿杜同学</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-10-29, 11:26:43</p>
-    <p><span class="copy-title">最后更新:</span>2019-10-29, 11:26:43</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/29/sqlserver%E4%B8%ADCONVERT%E7%9A%84%E7%94%A8%E6%B3%95%E8%AE%B0%E5%BD%95/" title="sqlserver中CONVERT的用法记录">http://yoursite.com/2019/10/29/sqlserver%E4%B8%ADCONVERT%E7%9A%84%E7%94%A8%E6%B3%95%E8%AE%B0%E5%BD%95/</a>
+    <p><span class="copy-title">发布时间:</span>2019-01-03, 13:47:21</p>
+    <p><span class="copy-title">最后更新:</span>2019-01-03, 13:47:21</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/01/03/%E5%8D%81%E5%88%86%E9%92%9F%E5%AD%A6%E4%BC%9AExcel%E5%AF%BC%E5%87%BA/" title="十分钟学会Excel导出">http://yoursite.com/2019/01/03/%E5%8D%81%E5%88%86%E9%92%9F%E5%AD%A6%E4%BC%9AExcel%E5%AF%BC%E5%87%BA/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
