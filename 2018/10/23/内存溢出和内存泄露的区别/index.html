@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>记录一次被批评的过程 | Hexo</title>
-  <meta name="keywords" content=" 数据库 ">
-  <meta name="description" content="记录一次被批评的过程 | Hexo">
+  <title>内存溢出和内存泄露的区别 | Hexo</title>
+  <meta name="keywords" content=" jvm ">
+  <meta name="description" content="内存溢出和内存泄露的区别 | Hexo">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="第一、直接在MySQL中解决： SELECT T.ID, T.USERNAME, DATE_FORMAT(t.birthday, ‘%Y-%m-%d %k:%i:%s’) as birthday FROM USERINFO T; SQL语句中加DATE_FORMAT函数就不会带微秒。 第二、在Java中处理： public static String getFullFormateString(Da">
 <meta property="og:type" content="article">
@@ -452,9 +452,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-记录一次被批评的过程" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-内存溢出和内存泄露的区别" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">记录一次被批评的过程</h1>
+        <h1 class="article-title">内存溢出和内存泄露的区别</h1>
     
     <div class="article-meta">
         
@@ -462,21 +462,21 @@
         
         <span class="book">
             
-                <a  data-rel="数据库">数据库</a>
+                <a  data-rel="jvm">jvm</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a class="color4">数据库</a>
+            <a class="color4">jvm</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2020-01-09 00:35:02'>2018-11-15 20:04</time>
+        创建时间:<time class="date" title='更新时间: 2020-02-05 18:56:52'>2018-10-23 21:32</time>
         
     </div>
     <div class="article-meta">
@@ -525,9 +525,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>前天有个需求是将表a的内容复制到表b中，当时没想起要用insert into select，结果写了两个sql，一条select 一条inset，被经理看到批评了，特此记录一下，警醒自己。</p>
-<p>将一个table1的数据的部分字段复制到table2中，或者将整个table1复制到table2中</p>
-<p>语法:Insert into Table2(a,b, c) select a,b,c from Table1。</p>
+        <p>内存溢出（out of memory）通俗理解就是内存不够，通常在运行大型软件或游戏时，软件或游戏所需要的内存远远超出了你主机内安装的内存所承受大小，就叫内存溢出。此时软件或游戏就运行不了，系统会提示内存溢出，有时候会自动关闭软件，重启电脑或者软件后释放掉一部分内存又可以正常运行该软件。</p>
+<p>内存泄漏（Memory Leak）是指程序中己动态分配的堆内存由于某种原因程序未释放或无法释放，造成系统内存的浪费，导致程序运行速度减慢甚至系统崩溃等严重后果。</p>
+<p>memory leak会最终会导致out of memory！</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 591235401@qq.com </span>
@@ -537,12 +537,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>记录一次被批评的过程</p>
+    <p><span class="copy-title">文章标题:</span>内存溢出和内存泄露的区别</p>
     
     <p><span class="copy-title">本文作者:</span><a  title="阿杜同学">阿杜同学</a></p>
-    <p><span class="copy-title">发布时间:</span>2018-11-15, 20:04:38</p>
-    <p><span class="copy-title">最后更新:</span>2018-11-15, 20:04:38</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2018/11/15/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E8%A2%AB%E6%89%B9%E8%AF%84%E7%9A%84%E8%BF%87%E7%A8%8B/" title="记录一次被批评的过程">http://yoursite.com/2018/11/15/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E8%A2%AB%E6%89%B9%E8%AF%84%E7%9A%84%E8%BF%87%E7%A8%8B/</a>
+    <p><span class="copy-title">发布时间:</span>2018-10-23, 21:32:21</p>
+    <p><span class="copy-title">最后更新:</span>2018-10-23, 21:32:21</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2018/10/23/%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%92%8C%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E7%9A%84%E5%8C%BA%E5%88%AB/" title="内存溢出和内存泄露的区别">http://yoursite.com/2018/10/23/%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%92%8C%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E7%9A%84%E5%8C%BA%E5%88%AB/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
